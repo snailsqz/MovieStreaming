@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Books</title>
+  </head>
+  <body>
+    <h1>Books</h1>
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Actions</th>
+      </tr>
+      <% for(var i = 0; i < books.length; i++){%>
+      <tr>
+        <td><%= books[i].title%></td>
+        <td><%= books[i].author%></td>
+        <td>
+          <a href="/book/<%=books[i].id%>">View</a>
+          <a href="/update/<%=books[i].id%>">Edit</a>
+          <a href="/delete/<%=books[i].id%>">Delete</a>
+        </td>
+      </tr>
+      <%}%>
+    </table>
+    <a href="/create">Create New Book</a>
+  </body>
+</html>
