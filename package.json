@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "runbe": "node SequlizeSQLiteCRUDBook.js",
-    "runfe": "node AxiosNodeHtml.js"
+    "runfe": "node AxiosNodeHtml.js",
+    "rundebug": "nodemon index.js"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie</title>
+  </head>
+  <body>
+    <h1><%=movie.title%></h1>
+    <p>Director:<%=movie.director%></p>
+    <a href="/update/<%=movie.movie_id%>">Edit</a>
+    <a href="/delete/<%=movie.movie_id%>">Delete</a>
+    <a href="/">Back to List</a>
+  </body>
+</html>

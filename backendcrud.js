@@ -7,11 +7,11 @@ app.use(express.json());
 const sequelize = new Sequelize("database", "username", "password", {
   host: "localhost",
   dialect: "sqlite", //choose sql to talk with
-  storage: "./Database/SQBook.sqlite",
+  storage: "./Database/Movies.sqlite",
 });
 
-const Book = sequelize.define("book", {
-  id: {
+const Movies = sequelize.define("movie", {
+  movie_id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
@@ -20,31 +20,35 @@ const Book = sequelize.define("book", {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  author: {
+  director: {
     type: Sequelize.STRING,
     allowNull: false,
+  },
+  desc: {
+    type: Sequelize.STRING,
+    allowNull: true,
   },
 });
 
 sequelize.sync(); //if table not exist create
 
-app.get("/books", (req, res) => {
-  Book.findAll() //select * from
-    .then((books) => {
-      res.json(books);
+app.get("/movies", (req, res) => {
+  Movies.findAll() //select * from
+    .then((movies) => {
+      res.json(movies);
     })
     .catch((err) => {
       res.status(500).send(err);
     });
 });
 
-app.get("/books/:id", (req, res) => {
-  Book.findByPk(req.params.id)
-    .then((book) => {
-      if (!book) {
-        res.status(404).send("Book not found");
+app.get("/movie/:id", (req, res) => {
+  Movies.findByPk(req.params.id)
+    .then((movie) => {
+      if (!movie) {
+        res.status(404).send("Movie not found");
       } else {
-        res.json(book);
+        res.json(movie);
       }
     })
     .catch((err) => {
@@ -52,26 +56,26 @@ app.get("/books/:id", (req, res) => {
     });
 });
 
-app.post("/books", (req, res) => {
-  Book.create(req.body)
-    .then((book) => {
-      res.send(book);
+app.post("/movies", (req, res) => {
+  Movies.create(req.body)
+    .then((movie) => {
+      res.send(movie);
     })
     .catch((err) => {
       res.status(500).send(err);
     });
 });
 
-app.put("/books/:id", (req, res) => {
-  Book.findByPk(req.params.id)
-    .then((book) => {
-      if (!book) {
-        res.status(404).send("Book not found");
+app.put("/movie/:id", (req, res) => {
+  Movies.findByPk(req.params.id)
+    .then((movie) => {
+      if (!movie) {
+        res.status(404).send("Movie not found");
       } else {
-        book
+        movie
           .update(req.body)
           .then(() => {
-            res.send(book);
+            res.send(movie);
           })
           .catch((err) => {
             res.status(500).send(err);
@@ -83,13 +87,13 @@ app.put("/books/:id", (req, res) => {
     });
 });
 
-app.delete("/books/:id", (req, res) => {
-  Book.findByPk(req.params.id)
-    .then((book) => {
-      if (!book) {
-        res.status(404).send("Book not found");
+app.delete("/movie/:id", (req, res) => {
+  Movies.findByPk(req.params.id)
+    .then((movie) => {
+      if (!movie) {
+        res.status(404).send("Movie not found");
       } else {
-        book
+        movie
           .destroy()
           .then(() => {
             res.send({});

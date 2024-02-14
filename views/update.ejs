@@ -1,23 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Update Book</title>
+    <title>Update Movie</title>
   </head>
   <body>
-    <h1>Update Book</h1>
-    <form action="/update/<%=book.id%>" method="post">
+    <h1>Update Movie</h1>
+    <form action="/update/<%=movies.movie_id%>" method="post">
       <label for="title">Title:</label>
-      <input type="text" name="title" id="title" value="<%= book.title%>" />
+      <input type="text" name="title" id="title" value="<%= movies.title%>" />
       <br />
       <label for="author">Author:</label>
-      <input type="text" name="author" id="author" value="<%= book.author%>" />
+      <input
+        type="text"
+        name="director"
+        id="director"
+        value="<%= movies.director%>"
+      />
       <br />
       <input type="submit" value="Update" />
     </form>
-    <a href="/book/<%= book.id%>">View</a>
-    <a href="/delete/<%= book.id%>">Delete</a>
+    <a href="/book/<%= movies.movie_id%>">View</a>
+    <a href="/delete/<%= movies.movie_id%>">Delete</a>
     <a href="/">Back to List</a>
   </body>
 </html>
