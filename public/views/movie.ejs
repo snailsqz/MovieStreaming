@@ -8,6 +8,8 @@
   <body>
     <h1><%=movie.title%></h1>
     <p>Director:<%=movie.director%></p>
+    <p>Image:<%=movie.imageFile%></p>
+    <img src=<%=movie.imageFile%> alt="">
     <a href="/update/<%=movie.movie_id%>">Edit</a>
     <a href="/delete/<%=movie.movie_id%>">Delete</a>
     <a href="/">Back to List</a>

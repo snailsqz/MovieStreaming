@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const app = express();
 const path = require("path");
+const multer = require("multer");
 var bodyParser = require("body-parser");
 
 const base_url = "http://localhost:3000";
@@ -37,9 +38,23 @@ app.get("/create", (req, res) => {
   res.render("create");
 });
 
-app.post("/create", async (req, res) => {
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
+
+app.post("/create", upload.single("imageFile"), async (req, res) => {
   try {
-    const data = { title: req.body.title, director: req.body.director };
+    const data = {
+      title: req.body.title,
+      director: req.body.director,
+      imageFile: req.body.imageFile,
+    };
     await axios.post(base_url + "/movies", data);
     res.redirect("/");
   } catch (err) {
