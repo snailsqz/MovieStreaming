@@ -53,7 +53,7 @@ app.post("/create", upload.single("imageFile"), async (req, res) => {
     const data = {
       title: req.body.title,
       director: req.body.director,
-      imageFile: req.body.imageFile,
+      imageFile: req.file.filename,
     };
     await axios.post(base_url + "/movies", data);
     res.redirect("/");
