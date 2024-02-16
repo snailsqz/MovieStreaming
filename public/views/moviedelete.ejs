@@ -14,8 +14,8 @@
     <div class="mainbox">
       <% for(var i = 0; i < movies.length; i++){%>
         <div class="imgitem">
-          <a href="/delete/<%=movies[i].movie_id%>" onclick="confirm('You delete really')"><img src="/images/<%= movies[i].imageFile %>"></a>
-          <a href="/delete/<%=movies[i].movie_id%>" onclick="confirm('You delete really')"><p><%= movies[i].title %></p></a>
+          <a href="/delete/<%=movies[i].movie_id%>" onclick="return confirm('You delete really')"><img src="/images/<%= movies[i].imageFile %>"></a>
+          <a href="/delete/<%=movies[i].movie_id%>" onclick="return confirm('You delete really')"><p><%= movies[i].title %></p></a>
         </div>
       <%}%>
     </div>

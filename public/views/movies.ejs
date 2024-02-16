@@ -8,6 +8,7 @@
   </head>
   <body>
     <header> 
+      <a href="/create">Add Movie</a>
       <a href="/movieupdate">Update Movie</a>
       <a href="/moviedelete">Delete Movie</a>
       <a href="/register">Register</a>
@@ -16,12 +17,11 @@
       <% for(var i = 0; i < movies.length; i++){%>
         <div class="imgitem">
           <a href="/movie/<%=movies[i].movie_id%>"><img src="/images/<%= movies[i].imageFile %>"></a>
-          <a href="/movie/<%=movies[i].movie_id%>"><p><%= movies[i].title %></p></a>
+          <a href="/movie/<%=movies[i].movie_id%>"><%= movies[i].title %></a>
 
         </div>
       <%}%>
     </div>
-    <a href="/create">Add New Movie</a>
   </body>
 </html>
 
