@@ -1,1 +1,1 @@
-# MovieStreaming
+# MovieStreaming for educational purpose
