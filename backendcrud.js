@@ -34,6 +34,22 @@ const Movies = sequelize.define("movie", {
   },
 });
 
+const User = sequelize.define("user", {
+  user_id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
 sequelize.sync(); //if table not exist create
 
 app.get("/movies", (req, res) => {
@@ -47,6 +63,16 @@ app.get("/movies", (req, res) => {
 });
 
 app.get("/movieupdate/", (req, res) => {
+  Movies.findAll() //select * from
+    .then((movies) => {
+      res.json(movies);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+app.get("/moviedelete/", (req, res) => {
   Movies.findAll() //select * from
     .then((movies) => {
       res.json(movies);
@@ -120,6 +146,33 @@ app.delete("/movie/:id", (req, res) => {
     .catch((err) => {
       res.status(500).send(err);
     });
+});
+
+app.post("/register", (req, res) => {
+  User.create(req.body)
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const { name, password } = req.body;
+    const user = await User.findOne({ where: { name } });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    if (user.password !== password) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+    return res.status(200).json({ message: "Login successful" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Server error" });
+  }
 });
 
 const port = process.env.PORT || 3000;

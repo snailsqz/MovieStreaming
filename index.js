@@ -73,6 +73,16 @@ app.get("/movieupdate", async (req, res) => {
   }
 });
 
+app.get("/moviedelete", async (req, res) => {
+  try {
+    const response = await axios.get(base_url + "/moviedelete/");
+    res.render("moviedelete", { movies: response.data });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error");
+  }
+});
+
 app.get("/update/:id", async (req, res) => {
   try {
     const response = await axios.get(base_url + "/movie/" + req.params.id);
@@ -97,6 +107,34 @@ app.post("/update/:id", async (req, res) => {
 app.get("/delete/:id", async (req, res) => {
   try {
     await axios.delete(base_url + "/movie/" + req.params.id);
+    res.redirect("/moviedelete");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error");
+  }
+});
+
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+app.post("/register", async (req, res) => {
+  try {
+    const data = {
+      name: req.body.name,
+      password: req.body.password,
+    };
+    await axios.put(base_url + "/register", data);
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error");
+  }
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    await axios.put(base_url + "/login");
     res.redirect("/");
   } catch (err) {
     console.error(err);
