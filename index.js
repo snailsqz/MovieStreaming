@@ -65,7 +65,7 @@ app.post("/create", upload.single("imageFile"), async (req, res) => {
 
 app.get("/movieupdate", async (req, res) => {
   try {
-    const response = await axios.get(base_url + "/movieupdate/");
+    const response = await axios.get(base_url + "/movieupdate");
     res.render("movieupdate", { movies: response.data });
   } catch (err) {
     console.error(err);
@@ -75,7 +75,7 @@ app.get("/movieupdate", async (req, res) => {
 
 app.get("/moviedelete", async (req, res) => {
   try {
-    const response = await axios.get(base_url + "/moviedelete/");
+    const response = await axios.get(base_url + "/moviedelete");
     res.render("moviedelete", { movies: response.data });
   } catch (err) {
     console.error(err);
@@ -124,7 +124,7 @@ app.post("/register", async (req, res) => {
       name: req.body.name,
       password: req.body.password,
     };
-    await axios.put(base_url + "/register", data);
+    await axios.post(base_url + "/register", data);
     res.redirect("/");
   } catch (err) {
     console.error(err);
@@ -134,7 +134,7 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   try {
-    await axios.put(base_url + "/login");
+    await axios.post(base_url + "/login");
     res.redirect("/");
   } catch (err) {
     console.error(err);
