@@ -63,6 +63,16 @@ app.post("/create", upload.single("imageFile"), async (req, res) => {
   }
 });
 
+app.get("/movieupdate", async (req, res) => {
+  try {
+    const response = await axios.get(base_url + "/movieupdate/");
+    res.render("movieupdate", { movies: response.data });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error");
+  }
+});
+
 app.get("/update/:id", async (req, res) => {
   try {
     const response = await axios.get(base_url + "/movie/" + req.params.id);

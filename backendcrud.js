@@ -1,19 +1,8 @@
 const express = require("express");
 const Sequelize = require("sequelize");
 const app = express();
-const multer = require("multer");
 
 app.use(express.json());
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./public/images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
 
 const sequelize = new Sequelize("database", "username", "password", {
   host: "localhost",
@@ -57,6 +46,16 @@ app.get("/movies", (req, res) => {
     });
 });
 
+app.get("/movieupdate/", (req, res) => {
+  Movies.findAll() //select * from
+    .then((movies) => {
+      res.json(movies);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
 app.get("/movie/:id", (req, res) => {
   Movies.findByPk(req.params.id)
     .then((movie) => {
@@ -71,7 +70,7 @@ app.get("/movie/:id", (req, res) => {
     });
 });
 
-app.post("/movies", upload.single("imageFile"), (req, res) => {
+app.post("/movies", (req, res) => {
   Movies.create(req.body)
     .then((movie) => {
       res.send(movie);

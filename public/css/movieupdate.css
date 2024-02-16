@@ -1,0 +1,35 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #18191a;
+}
+
+header {
+  height: 50px;
+  width: 100%;
+  background-color: aquamarine;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  height: 300px;
+  object-fit: cover;
+  border: 2px solid red;
+}
+
+.imgitem {
+  width: 200px;
+}
+
+.mainbox {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
+}
