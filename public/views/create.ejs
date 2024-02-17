@@ -4,24 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Movie</title>
-    <style>
-      body {
-        background-color: #18191a;
-      }
-    </style>
+    <link rel="stylesheet" href="css/create.css" />
   </head>
   <body>
-    <h1>Create Movie</h1>
-    <form method="post" action="/create" enctype="multipart/form-data">
-      <label for="title">Title:</label>
-      <input type="text" name="title" id="title" />
-      <br />
-      <label for="director">Director:</label>
-      <input type="text" name="director" id="director" />
-      <br />
-      <input type="submit" value="create" />
-      <input type="file" name="imageFile" id="" />
-    </form>
-    <a href="/">Back to List</a>
+    <header>
+      <a href="/create">Add Movie</a>
+      <a href="/movieupdate">Update Movie</a>
+      <a href="/moviedelete">Delete Movie</a>
+      <a href="/register">Register</a>
+    </header>
+    <div class="mainbox">
+      <h1>Create Movie</h1>
+      <form method="post" action="/create" enctype="multipart/form-data">
+        <label for="title">Title:</label>
+        <input type="text" name="title" id="title" />
+        <br />
+        <label for="director">Director:</label>
+        <input type="text" name="director" id="director" />
+        <br />
+        <input type="submit" value="create" />
+        <input type="file" name="imageFile" id="" />
+      </form>
+    </div>
   </body>
 </html>
