@@ -11,8 +11,17 @@ app.set("views", path.join(__dirname, "/public/views"));
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(express.static(__dirname + "/public"));
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
 
 app.get("/", async (req, res) => {
   try {
@@ -37,16 +46,6 @@ app.get("/movie/:id", async (req, res) => {
 app.get("/create", (req, res) => {
   res.render("create");
 });
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./public/images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
 
 app.post("/create", upload.single("imageFile"), async (req, res) => {
   try {
@@ -132,9 +131,17 @@ app.post("/register", async (req, res) => {
   }
 });
 
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 app.post("/login", async (req, res) => {
   try {
-    await axios.post(base_url + "/login");
+    const data = {
+      name: req.body.name,
+      password: req.body.password,
+    };
+    await axios.post(base_url + "/login", data);
     res.redirect("/");
   } catch (err) {
     console.error(err);
