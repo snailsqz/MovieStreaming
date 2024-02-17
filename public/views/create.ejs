@@ -8,22 +8,23 @@
   </head>
   <body>
     <header>
+      <a href="/">Home</a>
       <a href="/create">Add Movie</a>
       <a href="/movieupdate">Update Movie</a>
       <a href="/moviedelete">Delete Movie</a>
       <a href="/register">Register</a>
     </header>
     <div class="mainbox">
-      <h1>Create Movie</h1>
       <form method="post" action="/create" enctype="multipart/form-data">
+        <h1>Add Movie</h1>
         <label for="title">Title:</label>
         <input type="text" name="title" id="title" />
         <br />
         <label for="director">Director:</label>
         <input type="text" name="director" id="director" />
         <br />
-        <input type="submit" value="create" />
         <input type="file" name="imageFile" id="" />
+        <input type="submit" value="create" />
       </form>
     </div>
   </body>

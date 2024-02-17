@@ -29,8 +29,24 @@ header a {
 }
 
 .mainbox {
+  width: 100%;
+  height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid rgb(236, 131, 131);
+}
+
+form h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
