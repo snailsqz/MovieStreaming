@@ -142,10 +142,19 @@ app.post("/login", async (req, res) => {
       password: req.body.password,
     };
     await axios.post(base_url + "/login", data);
-    res.redirect("/");
+    if (res.status() == 404) {
+      console.log("404");
+      res.render("register");
+    }
+    if (res.status() == 401) {
+      console.log("401");
+      res.render("login");
+    }
+    return res.render("movies");
   } catch (err) {
     console.error(err);
-    res.status(500).send("error");
+    console.log("500");
+    res.render("register");
   }
 });
 
