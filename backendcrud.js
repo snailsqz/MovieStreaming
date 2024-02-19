@@ -1,6 +1,8 @@
 const express = require("express");
 const Sequelize = require("sequelize");
 const app = express();
+const fs = require("fs");
+const path = require("path");
 
 app.use(express.json());
 
@@ -46,6 +48,11 @@ const User = sequelize.define("user", {
   },
   password: {
     type: Sequelize.STRING,
+    allowNull: false,
+  },
+  roles: {
+    type: Sequelize.STRING,
+    defaultValue: "User",
     allowNull: false,
   },
 });
@@ -133,6 +140,21 @@ app.delete("/movie/:id", (req, res) => {
       if (!movie) {
         res.status(404).send("Movie not found");
       } else {
+        if (movie.imageFile) {
+          console.log("1");
+          console.log(movie.imageFile);
+          const imagePath = path.join(
+            __dirname,
+            `/public/images/${movie.imageFile}`
+          );
+          fs.unlink(imagePath, (err) => {
+            if (err) {
+              console.log("Error deleting file:", err);
+            } else {
+              console.log("File deleted successfully");
+            }
+          });
+        }
         movie
           .destroy()
           .then(() => {
@@ -163,15 +185,15 @@ app.post("/login", async (req, res) => {
     const { name, password } = req.body;
     const user = await User.findOne({ where: { name } });
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.json({ message: "User_not_found" });
     }
     if (user.password !== password) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).json({ message: "Invalid_credentials" });
     }
-    return res.status(200).json({ message: "Login successful" });
+    return res.status(200).json({ message: true, user });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Server error" });
+    return res.status(500).json({ error: "Server_error" });
   }
 });
 

@@ -141,20 +141,21 @@ app.post("/login", async (req, res) => {
       name: req.body.name,
       password: req.body.password,
     };
-    await axios.post(base_url + "/login", data);
-    if (res.status() == 404) {
-      console.log("404");
+    const response = await axios.post(base_url + "/login/", data);
+    if (response.data.message == "User_not_found") {
+      console.log("3");
       res.render("register");
-    }
-    if (res.status() == 401) {
+    } else if (response.data.message == true) {
+      const response2 = await axios.get(base_url + "/movies");
+      // console.log(response.data.user.user_id);
+      res.render("movies", { movies: response2.data });
+    } else if (res.status() == 401) {
       console.log("401");
       res.render("login");
     }
-    return res.render("movies");
   } catch (err) {
     console.error(err);
     console.log("500");
-    res.render("register");
   }
 });
 
