@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "runbe": "node SequlizeSQLiteCRUDBook.js",
-    "runfe": "node AxiosNodeHtml.js",
-    "rundebug": "nodemon index.js"
+    "runfrontend": "nodemon index.js",
+    "runbackend": "nodemon backendcrud.js"
   },
   "repository": {
     "type": "git",

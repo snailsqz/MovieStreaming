@@ -57,3 +57,38 @@ img {
   gap: 15px;
   flex-wrap: wrap;
 }
+
+@media screen and (max-width: 1536px) {
+  .imgitem {
+    width: 287px;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .imgitem {
+    width: 267px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .imgitem {
+    width: 234px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .imgitem {
+    width: 232px;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  header a {
+    font-size: 15px;
+  }
+  .imgitem {
+    width: 180px;
+  }
+  .imgitem a {
+    font-size: 15px;
+  }
+}
