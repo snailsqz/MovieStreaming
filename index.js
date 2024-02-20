@@ -3,6 +3,7 @@ const axios = require("axios");
 const app = express();
 const path = require("path");
 const multer = require("multer");
+const cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 
 const base_url = "http://localhost:3000";
@@ -11,6 +12,7 @@ app.set("views", path.join(__dirname, "/public/views"));
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(express.static(__dirname + "/public"));
 
 const storage = multer.diskStorage({
@@ -22,6 +24,16 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+
+const authenticateUser = (req, res, next) => {
+  if (req.cookies && req.cookies.userSession) {
+    // User is authenticated
+    next();
+  } else {
+    // User is not authenticated
+    res.redirect("/login");
+  }
+};
 
 app.get("/", async (req, res) => {
   try {
