@@ -30,6 +30,8 @@ const authenticateUser = (req, res, next) => {
   if (req.cookies && req.cookies.userSession) {
     // User is authenticated
     next();
+  } else {
+    res.redirect("/login");
   }
 };
 
@@ -181,7 +183,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/favorite/:id", async (req, res) => {
+app.get("/favorite/:id", authenticateUser, async (req, res) => {
   try {
     const response = await axios.get(base_url + "/favorite/" + req.params.id);
 
@@ -213,7 +215,6 @@ app.post("/favorite", async (req, res) => {
 app.get("/logout", (req, res) => {
   res.clearCookie("userSession");
   app.locals.moviedata = "";
-  console.log(app.locals.moviedata);
   res.render("logout");
 });
 
