@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(__dirname + "/public"));
+app.locals.moviedata = "";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -29,13 +30,10 @@ const authenticateUser = (req, res, next) => {
   if (req.cookies && req.cookies.userSession) {
     // User is authenticated
     next();
-  } else {
-    // User is not authenticated
-    res.redirect("/login");
   }
 };
 
-app.get("/", authenticateUser, async (req, res) => {
+app.get("/", async (req, res) => {
   try {
     const response = await axios.get(base_url + "/movies");
     res.render("movies", { movies: response.data });
@@ -48,6 +46,7 @@ app.get("/", authenticateUser, async (req, res) => {
 app.get("/movie/:id", async (req, res) => {
   try {
     const response = await axios.get(base_url + "/movie/" + req.params.id);
+    // console.log(response.data);
     res.render("movie", { movie: response.data });
   } catch (err) {
     console.log(err);
@@ -56,10 +55,16 @@ app.get("/movie/:id", async (req, res) => {
 });
 
 app.get("/create", (req, res) => {
-  res.render("create");
+  if (req.cookies && req.cookies.userSession) {
+    console.log("hell22o");
+    res.render("create");
+  } else {
+    console.log("hello");
+    res.redirect("/login");
+  }
 });
 
-app.post("/create", upload.single("imageFile"), async (req, res) => {
+app.post("/create", upload.single("imageFile"), async (req, res, next) => {
   try {
     const data = {
       title: req.body.title,
@@ -160,7 +165,11 @@ app.post("/login", async (req, res) => {
     } else if (response.data.message == true) {
       res.cookie("userSession", response.data.user.name, { httpOnly: true });
       //console.log(response.data.user.user_id);
-      req.locals.username = response.data.user.name;
+      app.locals.moviedata = {
+        user_id: response.data.user.user_id,
+        userName: response.data.user.name,
+        roles: response.data.user.roles,
+      };
       res.redirect("/");
     } else if (res.status() == 401) {
       console.log("401");
@@ -172,8 +181,39 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/logout", (req, res) => {
+app.get("/favorite/:id", async (req, res) => {
+  try {
+    const response = await axios.get(base_url + "/favorite/" + req.params.id);
+
+    let array = [];
+    for (let i = 0; i < response.data.length; i++) {
+      array.push(response.data[i].movie_id);
+    }
+    app.locals.favoriteMovie = {
+      favoriteArray: array,
+    };
+
+    const response2 = await axios.get(base_url + "/movies");
+    res.render("favorite", { movies: response2.data });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("error");
+  }
+});
+
+app.post("/favorite", async (req, res) => {
+  const data = {
+    movie_id: req.body.movie_id,
+    user_id: req.body.user_id,
+  };
+  await axios.post(base_url + "/favorite/", data);
+  res.redirect("/movie/" + req.body.movie_id);
+});
+
+app.get("/logout", (req, res) => {
   res.clearCookie("userSession");
+  app.locals.moviedata = "";
+  console.log(app.locals.moviedata);
   res.render("logout");
 });
 

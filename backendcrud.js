@@ -57,6 +57,20 @@ const User = sequelize.define("user", {
   },
 });
 
+const Favorite = sequelize.define("favorite", {
+  fmovie_id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  movie_id: {
+    type: Sequelize.INTEGER,
+  },
+  user_id: {
+    type: Sequelize.INTEGER,
+  },
+});
+
 sequelize.sync(); //if table not exist create
 
 app.get("/movies", (req, res) => {
@@ -195,6 +209,51 @@ app.post("/login", async (req, res) => {
     console.error(error);
     return res.status(500).json({ error: "Server_error" });
   }
+});
+
+app.put("/user/:id", (req, res) => {
+  User.findByPk(req.params.id)
+    .then((user) => {
+      if (!user) {
+        res.status(404).send("user not found");
+      } else {
+        user
+          .update(req.body)
+          .then(() => {
+            res.send(user);
+          })
+          .catch((err) => {
+            res.status(500).send(err);
+          });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+app.get("/favorite/:id", (req, res) => {
+  Favorite.findAll({ where: { user_id: req.params.id } })
+    .then((e) => {
+      res.json(e);
+    })
+    // Movies.findAll()
+    //   .then((movies) => {
+    //     res.json(movies);
+    //   })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+app.post("/favorite", (req, res) => {
+  Favorite.create(req.body)
+    .then((favorite) => {
+      res.send(favorite);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
 });
 
 const port = process.env.PORT || 3000;

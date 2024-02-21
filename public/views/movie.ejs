@@ -12,6 +12,14 @@
     <% if (movie.imageFile) { %>
       <img src="/images/<%= movie.imageFile %>">
     <% } %>
+    <form method="post" action="/favorite">
+      <input hidden type="text" name="movie_id" value="<%=movie.movie_id %>" >
+      <input hidden type="text" name="user_id" value="<%=moviedata.user_id %>">
+      <button type="submit">Okay</button>
+    </form>
+
+    <p><%=movie.movie_id %></p>
+    
     <a href="/update/<%=movie.movie_id%>">Edit</a>
     <a href="/delete/<%=movie.movie_id%>">Delete</a>
     <a href="/">Back to List</a>

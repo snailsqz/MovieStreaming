@@ -4,13 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NetBoss</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="../css/index.css">
   </head>
   <body>
     <header> 
       <a href="/">Home</a>
       <% if (moviedata.userName != "" && moviedata.roles == "Admin") { %>
-      <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
       <a href="/create">Add Movie</a>
       <a href="/movieupdate">Update Movie</a>
       <a href="/moviedelete">Delete Movie</a>
@@ -18,11 +17,8 @@
       <% if (moviedata.roles == "User" ){ %>
       <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
       <% }%>
-      <% if (!moviedata.userName) { %>
       <a href="/register">Register</a>
       <a href="/login">Login</a>
-      <% } %>
-      <a href="/logout">LogOut</a>
     </header>
     <% if (moviedata.userName) { %>
       <p>Welcome, <%= moviedata.userName %>!</p>
@@ -30,11 +26,11 @@
       <p>Welcome!</p>
     <% } %>
     <div class="mainbox">
-      
-      <% for(var i = 0; i < movies.length; i++){%>
+      <% for(var i = 0; i < favoriteMovie.favoriteArray.length; i++){%>
+        <p><%=favoriteMovie.favoriteArray[i]%></p>
         <div class="imgitem">
-          <a href="/movie/<%=movies[i].movie_id%>"><img src="/images/<%= movies[i].imageFile %>"></a>
-          <a href="/movie/<%=movies[i].movie_id%>"><%= movies[i].title %></a>
+          <a href="/movie/<%=movies[favoriteMovie.favoriteArray[i] - 1].movie_id%>"><img src="/images/<%= movies[favoriteMovie.favoriteArray[i] - 1].imageFile %>"></a>
+          <a href="/movie/<%=movies[favoriteMovie.favoriteArray[i] - 1].movie_id%>"><%= movies[favoriteMovie.favoriteArray[i] - 1].title %></a>
         </div>
       <%}%>
     </div>
