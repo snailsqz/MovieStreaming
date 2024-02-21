@@ -215,7 +215,7 @@ app.post("/favorite", async (req, res) => {
 app.get("/logout", (req, res) => {
   res.clearCookie("userSession");
   app.locals.moviedata = "";
-  res.render("logout");
+  res.redirect("/");
 });
 
 app.listen(5500, () => {

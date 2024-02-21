@@ -9,11 +9,22 @@
   <body>
     <header>
       <a href="/">Home</a>
+      <% if (moviedata.userName != "" && moviedata.roles == "Admin") { %>
+      <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
       <a href="/create">Add Movie</a>
       <a href="/movieupdate">Update Movie</a>
       <a href="/moviedelete">Delete Movie</a>
+      <% }%>
+      <% if (moviedata.roles == "User" ){ %>
+      <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
+      <% }%>
+      <% if (!moviedata.userName) { %>
       <a href="/register">Register</a>
       <a href="/login">Login</a>
+      <% } %>
+      <% if (moviedata.userName) { %>
+      <a href="/logout">LogOut</a>
+      <% } %>
     </header>
     <div class="mainbox">
       <form method="post" action="/create" enctype="multipart/form-data">

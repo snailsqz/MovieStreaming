@@ -22,7 +22,9 @@
       <a href="/register">Register</a>
       <a href="/login">Login</a>
       <% } %>
+      <% if (moviedata.userName) { %>
       <a href="/logout">LogOut</a>
+      <% } %>
     </header>
     <% if (moviedata.userName) { %>
       <p>Welcome, <%= moviedata.userName %>!</p>
