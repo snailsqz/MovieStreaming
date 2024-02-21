@@ -35,7 +35,7 @@ const authenticateUser = (req, res, next) => {
   }
 };
 
-app.get("/", async (req, res) => {
+app.get("/", authenticateUser, async (req, res) => {
   try {
     const response = await axios.get(base_url + "/movies");
     res.render("movies", { movies: response.data });
@@ -158,9 +158,10 @@ app.post("/login", async (req, res) => {
       console.log("3");
       res.render("register");
     } else if (response.data.message == true) {
-      const response2 = await axios.get(base_url + "/movies");
-      // console.log(response.data.user.user_id);
-      res.render("movies", { movies: response2.data });
+      res.cookie("userSession", response.data.user.name, { httpOnly: true });
+      //console.log(response.data.user.user_id);
+      req.locals.username = response.data.user.name;
+      res.redirect("/");
     } else if (res.status() == 401) {
       console.log("401");
       res.render("login");
@@ -169,6 +170,11 @@ app.post("/login", async (req, res) => {
     console.error(err);
     console.log("500");
   }
+});
+
+app.post("/logout", (req, res) => {
+  res.clearCookie("userSession");
+  res.render("logout");
 });
 
 app.listen(5500, () => {
