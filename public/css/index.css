@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
 * {
   padding: 0;
@@ -28,6 +29,12 @@ header a {
   font-weight: 600;
 }
 
+.welcome {
+  color: #212427;
+  font-size: x-large;
+  padding: 15px 0px 0px 20px;
+}
+
 img {
   width: 100%;
   height: 100%;
@@ -46,8 +53,9 @@ img {
   text-decoration: none;
   font-style: normal;
   color: #ff9494;
-  font-weight: 600;
+  font-weight: 700;
   font-size: x-large;
+  font-family: "Raleway", sans-serif;
 }
 
 .mainbox {
