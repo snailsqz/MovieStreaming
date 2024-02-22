@@ -39,6 +39,7 @@ const authenticateUser = (req, res, next) => {
 
 app.get("/", async (req, res) => {
   try {
+    app.locals.checkFavorite = false;
     const response = await axios.get(base_url + "/movies");
     res.render("movies", { movies: response.data });
   } catch (err) {
