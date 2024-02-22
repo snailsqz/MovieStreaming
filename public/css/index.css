@@ -31,8 +31,9 @@ header a {
 
 .welcome {
   color: #212427;
-  font-size: x-large;
+  font-size: xx-large;
   padding: 15px 0px 0px 20px;
+  font-weight: 500;
 }
 
 img {

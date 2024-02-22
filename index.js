@@ -74,17 +74,23 @@ app.get("/create", (req, res) => {
 });
 
 app.post("/create", upload.single("imageFile"), async (req, res, next) => {
-  try {
-    const data = {
-      title: req.body.title,
-      director: req.body.director,
-      imageFile: req.file.filename,
-    };
-    await axios.post(base_url + "/movies", data);
+  if (req.cookies && req.cookies.userSession == "admin") {
+    try {
+      const data = {
+        title: req.body.title,
+        director: req.body.director,
+        imageFile: req.file.filename,
+      };
+      await axios.post(base_url + "/movies", data);
+      res.redirect("/");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("error");
+    }
+  } else if (req.cookies && req.cookies.userSession != "admin") {
     res.redirect("/");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("error");
+  } else {
+    res.redirect("/login");
   }
 });
 
@@ -137,23 +143,35 @@ app.get("/update/:id", async (req, res) => {
 });
 
 app.post("/update/:id", async (req, res) => {
-  try {
-    const data = { title: req.body.title, director: req.body.director };
-    await axios.put(base_url + "/movie/" + req.params.id, data);
+  if (req.cookies && req.cookies.userSession == "admin") {
+    try {
+      const data = { title: req.body.title, director: req.body.director };
+      await axios.put(base_url + "/movie/" + req.params.id, data);
+      res.redirect("/");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("error");
+    }
+  } else if (req.cookies && req.cookies.userSession != "admin") {
     res.redirect("/");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("error");
+  } else {
+    res.redirect("/login");
   }
 });
 
 app.get("/delete/:id", async (req, res) => {
-  try {
-    await axios.delete(base_url + "/movie/" + req.params.id);
-    res.redirect("/moviedelete");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("error");
+  if (req.cookies && req.cookies.userSession == "admin") {
+    try {
+      await axios.delete(base_url + "/movie/" + req.params.id);
+      res.redirect("/moviedelete");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("error");
+    }
+  } else if (req.cookies && req.cookies.userSession != "admin") {
+    res.redirect("/");
+  } else {
+    res.redirect("/login");
   }
 });
 
@@ -172,9 +190,7 @@ app.post("/register", async (req, res) => {
     if (response.data.message == "al") {
       app.locals.checkUserDupe = "Already have this username";
       res.redirect("/register");
-    } else {
-      res.redirect("/login");
-    }
+    } else res.redirect("/login");
   } catch (err) {
     console.error(err);
     res.status(500).send("error");

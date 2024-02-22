@@ -32,15 +32,16 @@
       <a href="/logout">LogOut</a>
       <% } %>
     </header>
+    <h1 class="welcome">Your Favorite List!</h1>
     <div class="mainbox">
       <% if (favoriteMovie.length == 0) { %>
         <p class="favtxt">No favorite now! Let's add something</p>
       <% } %>
+      
       <% for(let i = 0; i < favoriteMovie.length; i++){%>
-        
+  
         <div class="imgitem">
-          <p><%=favoriteMovie[i]%></p>
-          <a href="/movie/<%=movies[favoriteMovie[i] - 1].movie_id%>"><img src="/images/<%= movies[favoriteMovie[i] - 1].imageFile %>"></a>
+          <a href="/movie/<%=movies[favoriteMovie[i] - 1].movie_id%>"><img src="/images/<%= movies[favoriteMovie[i]-1].imageFile %>"></a>
           <a href="/movie/<%=movies[favoriteMovie[i] - 1].movie_id%>"><%= movies[favoriteMovie[i] - 1].title %></a>
         </div>
       <%}%>

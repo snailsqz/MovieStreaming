@@ -207,12 +207,11 @@ app.post("/login", async (req, res) => {
   try {
     const { name, password } = req.body;
     const user = await User.findOne({ where: { name } });
-    if (!user) {
-      return res.json({ message: "User_not_found" });
-    }
-    if (user.password !== password) {
+    if (!user) return res.json({ message: "User_not_found" });
+
+    if (user.password !== password)
       return res.json({ message: "Wrong_Password" });
-    }
+
     return res.status(200).json({ message: true, user });
   } catch (error) {
     console.error(error);
@@ -253,7 +252,6 @@ app.get("/favorite/:id", (req, res) => {
 
 app.post("/favorite", async (req, res) => {
   try {
-    // Check if the combination of movie_id and user_id already exists
     const existingFavorite = await Favorite.findOne({
       where: {
         movie_id: req.body.movie_id,
@@ -261,11 +259,8 @@ app.post("/favorite", async (req, res) => {
       },
     });
 
-    if (existingFavorite) {
-      return res.json({ message: "al" });
-    }
+    if (existingFavorite) return res.json({ message: "al" });
 
-    // If the combination doesn't exist, create a new favorite
     const favorite = await Favorite.create({
       movie_id: req.body.movie_id,
       user_id: req.body.user_id,
