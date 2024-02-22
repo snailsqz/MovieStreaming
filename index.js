@@ -119,12 +119,18 @@ app.get("/moviedelete", async (req, res) => {
 });
 
 app.get("/update/:id", async (req, res) => {
-  try {
-    const response = await axios.get(base_url + "/movie/" + req.params.id);
-    res.render("update", { movies: response.data });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("error");
+  if (req.cookies && req.cookies.userSession == "admin") {
+    try {
+      const response = await axios.get(base_url + "/movie/" + req.params.id);
+      res.render("update", { movies: response.data });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("error");
+    }
+  } else if (req.cookies && req.cookies.userSession != "admin") {
+    res.redirect("/");
+  } else {
+    res.redirect("/login");
   }
 });
 
@@ -165,7 +171,7 @@ app.post("/register", async (req, res) => {
       app.locals.checkUserDupe = "Already have this username";
       res.redirect("/register");
     } else {
-      res.redirect("/");
+      res.redirect("/login");
     }
   } catch (err) {
     console.error(err);

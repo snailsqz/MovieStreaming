@@ -8,6 +8,11 @@
       body {
         background-color: #2c76c0;
       }
+      
+        #txtPassword{
+           -webkit-text-security:disc;
+       }
+
     </style>
   </head>
   <body>
@@ -16,11 +21,11 @@
       <p><%=checkUserDupe%></p>
     <% } %>
     <form method="post" action="/register">
-      <label for="name">Username:</label>
-      <input type="text" name="name" />
+      <label for="name" >Username:</label>
+      <input type="text" name="name"/>
       <br />
       <label for="password">Password:</label>
-      <input type="password" name="password" />
+      <input type="text" name="password" id="txtPassword"/>
       <br />
       <input type="submit" value="register" />
     </form>
