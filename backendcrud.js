@@ -237,23 +237,36 @@ app.get("/favorite/:id", (req, res) => {
     .then((e) => {
       res.json(e);
     })
-    // Movies.findAll()
-    //   .then((movies) => {
-    //     res.json(movies);
-    //   })
     .catch((err) => {
       res.status(500).send(err);
     });
 });
 
-app.post("/favorite", (req, res) => {
-  Favorite.create(req.body)
-    .then((favorite) => {
-      res.send(favorite);
-    })
-    .catch((err) => {
-      res.status(500).send(err);
+app.post("/favorite", async (req, res) => {
+  try {
+    // Check if the combination of movie_id and user_id already exists
+    const existingFavorite = await Favorite.findOne({
+      where: {
+        movie_id: req.body.movie_id,
+        user_id: req.body.user_id,
+      },
     });
+
+    if (existingFavorite) {
+      return res.json({ message: "al" });
+    }
+
+    // If the combination doesn't exist, create a new favorite
+    const favorite = await Favorite.create({
+      movie_id: req.body.movie_id,
+      user_id: req.body.user_id,
+    });
+
+    res.send(favorite);
+  } catch (error) {
+    console.error("Error creating favorite:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 const port = process.env.PORT || 3000;

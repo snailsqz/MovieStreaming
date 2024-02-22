@@ -6,6 +6,9 @@
     <title>Movie</title>
   </head>
   <body>
+    <% if (checkFavorite) { %>
+      <h1>Already in Favorite</h1>
+    <% } %>
     <h1><%=movie.title%></h1>
     <p>Director:<%=movie.director%></p>
     
