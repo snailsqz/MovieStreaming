@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(__dirname + "/public"));
 app.locals.moviedata = "";
+app.locals.checkLogin = "";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -161,21 +162,24 @@ app.post("/login", async (req, res) => {
       password: req.body.password,
     };
     const response = await axios.post(base_url + "/login/", data);
-    if (response.data.message == "User_not_found") {
-      console.log("3");
-      res.render("register");
-    } else if (response.data.message == true) {
+    if (response.data.message == true) {
       res.cookie("userSession", response.data.user.name, { httpOnly: true });
-      //console.log(response.data.user.user_id);
+      console.log(response.data.user.name, "Login Successful");
       app.locals.moviedata = {
         user_id: response.data.user.user_id,
         userName: response.data.user.name,
         roles: response.data.user.roles,
       };
+      app.locals.checkLogin = "";
       res.redirect("/");
-    } else if (res.status() == 401) {
-      console.log("401");
-      res.render("login");
+    } else if (response.data.message == "User_not_found") {
+      console.log("User Not Found");
+      app.locals.checkLogin = "User not found";
+      res.redirect("login");
+    } else if (response.data.message == "Wrong_Password") {
+      console.log("Wrong Password");
+      app.locals.checkLogin = "Wrong Password";
+      res.redirect("login");
     }
   } catch (err) {
     console.error(err);
@@ -218,6 +222,7 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-app.listen(5500, () => {
-  console.log("server started on port 5500");
+const port = 5500;
+app.listen(port, () => {
+  console.log(`Listening on port http://localhost:${port}...`);
 });

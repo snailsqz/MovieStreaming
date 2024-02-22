@@ -202,7 +202,7 @@ app.post("/login", async (req, res) => {
       return res.json({ message: "User_not_found" });
     }
     if (user.password !== password) {
-      return res.status(401).json({ message: "Invalid_credentials" });
+      return res.json({ message: "Wrong_Password" });
     }
     return res.status(200).json({ message: true, user });
   } catch (error) {
