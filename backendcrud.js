@@ -185,6 +185,14 @@ app.delete("/movie/:id", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
+  const existingUsername = User.findOne({
+    where: {
+      name: req.body.name,
+    },
+  });
+
+  if (existingUsername) return res.json({ message: "al" });
+
   User.create(req.body)
     .then((user) => {
       res.send(user);

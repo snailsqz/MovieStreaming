@@ -17,6 +17,7 @@ app.use(express.static(__dirname + "/public"));
 app.locals.moviedata = "";
 app.locals.checkLogin = "";
 app.locals.checkFavorite = "";
+app.locals.checkUserDupe = "";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -40,6 +41,8 @@ const authenticateUser = (req, res, next) => {
 app.get("/", async (req, res) => {
   try {
     app.locals.checkFavorite = false;
+    app.locals.checkUserDupe = "";
+    app.locals.checkLogin = "";
     const response = await axios.get(base_url + "/movies");
     res.render("movies", { movies: response.data });
   } catch (err) {
@@ -60,11 +63,11 @@ app.get("/movie/:id", async (req, res) => {
 });
 
 app.get("/create", (req, res) => {
-  if (req.cookies && req.cookies.userSession) {
-    console.log("hell22o");
+  if (req.cookies && req.cookies.userSession == "admin") {
     res.render("create");
+  } else if (req.cookies && req.cookies.userSession != "admin") {
+    res.redirect("/");
   } else {
-    console.log("hello");
     res.redirect("/login");
   }
 });
@@ -85,22 +88,34 @@ app.post("/create", upload.single("imageFile"), async (req, res, next) => {
 });
 
 app.get("/movieupdate", async (req, res) => {
-  try {
-    const response = await axios.get(base_url + "/movieupdate");
-    res.render("movieupdate", { movies: response.data });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("error");
+  if (req.cookies && req.cookies.userSession == "admin") {
+    try {
+      const response = await axios.get(base_url + "/movieupdate");
+      res.render("movieupdate", { movies: response.data });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("error");
+    }
+  } else if (req.cookies && req.cookies.userSession != "admin") {
+    res.redirect("/");
+  } else {
+    res.redirect("/login");
   }
 });
 
 app.get("/moviedelete", async (req, res) => {
-  try {
-    const response = await axios.get(base_url + "/moviedelete");
-    res.render("moviedelete", { movies: response.data });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("error");
+  if (req.cookies && req.cookies.userSession == "admin") {
+    try {
+      const response = await axios.get(base_url + "/moviedelete");
+      res.render("moviedelete", { movies: response.data });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("error");
+    }
+  } else if (req.cookies && req.cookies.userSession != "admin") {
+    res.redirect("/");
+  } else {
+    res.redirect("/login");
   }
 });
 
@@ -145,8 +160,14 @@ app.post("/register", async (req, res) => {
       name: req.body.name,
       password: req.body.password,
     };
-    await axios.post(base_url + "/register", data);
-    res.redirect("/");
+    const response = await axios.post(base_url + "/register", data);
+
+    if (response.data.message == "al") {
+      app.locals.checkUserDupe = "Already have this username";
+      res.redirect("/register");
+    } else {
+      res.redirect("/");
+    }
   } catch (err) {
     console.error(err);
     res.status(500).send("error");

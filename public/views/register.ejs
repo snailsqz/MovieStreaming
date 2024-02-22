@@ -12,6 +12,9 @@
   </head>
   <body>
     <h1>Register</h1>
+    <% if (checkUserDupe) { %>
+      <p><%=checkUserDupe%></p>
+    <% } %>
     <form method="post" action="/register">
       <label for="name">Username:</label>
       <input type="text" name="name" />
