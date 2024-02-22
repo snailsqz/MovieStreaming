@@ -32,11 +32,6 @@
       <a href="/logout">LogOut</a>
       <% } %>
     </header>
-    <% if (moviedata.userName) { %>
-      <p class="welcome">Welcome, <%= moviedata.userName %>!</p>
-    <% } else { %>
-      <p class="welcome">Welcome!</p>
-    <% } %>
     <div class="mainbox">
       <% if (favoriteMovie.length == 0) { %>
         <p class="favtxt">No favorite now! Let's add something</p>
