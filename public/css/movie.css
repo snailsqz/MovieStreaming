@@ -11,10 +11,11 @@
 
 body {
   background-color: #fff5e4;
+  height: 100vh;
 }
 
 header {
-  height: 50px;
+  height: 6%;
   width: 100%;
   font-size: x-large;
   background-color: #ffe3e1;
@@ -29,75 +30,75 @@ header a {
   font-weight: 600;
 }
 
-.welcome {
-  color: #212427;
-  font-size: x-large;
-  padding: 15px 0px 0px 20px;
-}
-
 img {
-  width: 100%;
-  height: 100%;
-  height: 150px;
+  width: 70%;
+  height: 85%;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 90px;
 }
 
-.imgitem {
-  width: 300px;
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 15px;
+  border: 2px solid #4caf50;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  color: #4caf50;
 }
 
-.imgitem a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  font-style: normal;
-  color: #ff9494;
-  font-weight: 700;
-  font-size: x-large;
-  font-family: "Raleway", sans-serif;
+.btn:hover {
+  color: #212427;
+  background-color: #4caf50;
 }
 
 .mainbox {
-  padding: 20px;
+  height: 94%;
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  gap: 15px;
-  flex-wrap: wrap;
+}
+
+.box1 {
+  width: 60%;
+  height: 100%;
+}
+
+.box1 div:nth-of-type(1) {
+  width: 100%;
+  height: 55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box1 div:nth-of-type(2) {
+  width: 100%;
+  height: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box2 {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 @media screen and (max-width: 1536px) {
-  .imgitem {
-    width: 287px;
-  }
 }
 
 @media screen and (max-width: 1440px) {
-  .imgitem {
-    width: 267px;
-  }
 }
 @media screen and (max-width: 1024px) {
-  .imgitem {
-    width: 234px;
-  }
 }
 
 @media screen and (max-width: 768px) {
-  .imgitem {
-    width: 232px;
-  }
 }
 
 @media screen and (max-width: 426px) {
-  header a {
-    font-size: 15px;
-  }
-  .imgitem {
-    width: 180px;
-  }
-  .imgitem a {
-    font-size: 15px;
-  }
 }

@@ -17,6 +17,7 @@ app.use(express.static(__dirname + "/public"));
 app.locals.moviedata = "";
 app.locals.checkLogin = "";
 app.locals.checkFavorite = "";
+app.locals.favoriteStatus = "";
 app.locals.checkUserDupe = "";
 
 const storage = multer.diskStorage({
@@ -42,6 +43,7 @@ app.get("/", async (req, res) => {
     app.locals.checkFavorite = false;
     app.locals.checkUserDupe = "";
     app.locals.checkLogin = "";
+    app.locals.favoriteStatus = "";
     const response = await axios.get(base_url + "/movies");
     res.render("movies", { movies: response.data });
   } catch (err) {
@@ -216,23 +218,27 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/favorite/:id", authenticateUser, async (req, res) => {
-  try {
-    const response = await axios.get(base_url + "/favorite/" + req.params.id);
-    let array = [];
-    for (let i = 0; i < response.data.length; i++)
-      array.push(response.data[i].movie_id);
+  if (app.locals.moviedata.user_id == req.params.id) {
+    try {
+      const response = await axios.get(base_url + "/favorite/" + req.params.id);
+      let array = [];
+      for (let i = 0; i < response.data.length; i++)
+        array.push(response.data[i].movie_id);
 
-    app.locals.favoriteMovie = array;
+      app.locals.favoriteMovie = array;
 
-    const response2 = await axios.get(base_url + "/movies");
-    res.render("favorite", { movies: response2.data });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("error");
+      const response2 = await axios.get(base_url + "/movies");
+      res.render("favorite", { movies: response2.data });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("error");
+    }
+  } else {
+    res.redirect("/favorite/" + app.locals.moviedata.user_id);
   }
 });
 
-app.post("/favorite", async (req, res) => {
+app.post("/favorite", authenticateUser, async (req, res) => {
   const data = {
     movie_id: req.body.movie_id,
     user_id: req.body.user_id,
@@ -240,9 +246,9 @@ app.post("/favorite", async (req, res) => {
 
   const response = await axios.post(base_url + "/favorite/", data);
 
-  if (response.data.message == "al") {
-    app.locals.checkFavorite = true;
-  }
+  if (response.data.message == "al") app.locals.checkFavorite = true;
+  else app.locals.favoriteStatus = `Add to your favorite!`;
+
   res.redirect("/movie/" + req.body.movie_id);
 });
 

@@ -22,10 +22,10 @@
     <% } %>
     <form method="post" action="/register">
       <label for="name" >Username:</label>
-      <input type="text" name="name"/>
+      <input type="text" name="name" minlength="4"/>
       <br />
       <label for="password">Password:</label>
-      <input type="text" name="password" id="txtPassword"/>
+      <input type="text" name="password" id="txtPassword" minlength="6"/>
       <br />
       <input type="submit" value="register" />
     </form>
