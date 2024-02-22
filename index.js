@@ -31,7 +31,6 @@ const upload = multer({ storage: storage });
 
 const authenticateUser = (req, res, next) => {
   if (req.cookies && req.cookies.userSession) {
-    // User is authenticated
     next();
   } else {
     res.redirect("/login");
@@ -217,9 +216,8 @@ app.get("/favorite/:id", authenticateUser, async (req, res) => {
     for (let i = 0; i < response.data.length; i++)
       array.push(response.data[i].movie_id);
 
-    app.locals.favoriteMovie = {
-      favoriteArray: array,
-    };
+    app.locals.favoriteMovie = array;
+
     const response2 = await axios.get(base_url + "/movies");
     res.render("favorite", { movies: response2.data });
   } catch (err) {

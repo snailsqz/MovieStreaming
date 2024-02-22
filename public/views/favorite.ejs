@@ -32,11 +32,12 @@
       <p>Welcome!</p>
     <% } %>
     <div class="mainbox">
-      <% for(let i = 0; i < favoriteMovie.favoriteArray.length; i++){%>
-        <p><%=favoriteMovie.favoriteArray[i]%></p>
+      <% for(let i = 0; i < favoriteMovie.length; i++){%>
+        
         <div class="imgitem">
-          <a href="/movie/<%=movies[favoriteMovie.favoriteArray[i] - 1].movie_id%>"><img src="/images/<%= movies[favoriteMovie.favoriteArray[i] - 1].imageFile %>"></a>
-          <a href="/movie/<%=movies[favoriteMovie.favoriteArray[i] - 1].movie_id%>"><%= movies[favoriteMovie.favoriteArray[i] - 1].title %></a>
+          <p><%=favoriteMovie[i]%></p>
+          <a href="/movie/<%=movies[favoriteMovie[i] - 1].movie_id%>"><img src="/images/<%= movies[favoriteMovie[i] - 1].imageFile %>"></a>
+          <a href="/movie/<%=movies[favoriteMovie[i] - 1].movie_id%>"><%= movies[favoriteMovie[i] - 1].title %></a>
         </div>
       <%}%>
     </div>

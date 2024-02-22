@@ -149,6 +149,11 @@ app.put("/movie/:id", (req, res) => {
 });
 
 app.delete("/movie/:id", (req, res) => {
+  Favorite.destroy({
+    where: {
+      movie_id: req.params.id,
+    },
+  });
   Movies.findByPk(req.params.id)
     .then((movie) => {
       if (!movie) {
@@ -184,22 +189,18 @@ app.delete("/movie/:id", (req, res) => {
     });
 });
 
-app.post("/register", (req, res) => {
-  const existingUsername = User.findOne({
-    where: {
-      name: req.body.name,
-    },
-  });
-
-  if (existingUsername) return res.json({ message: "al" });
-
-  User.create(req.body)
-    .then((user) => {
-      res.send(user);
-    })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
+app.post("/register", async (req, res) => {
+  const exist = await User.findOne({ where: { name: req.body.name } });
+  if (exist) return res.json({ message: "al" });
+  else {
+    User.create(req.body)
+      .then((user) => {
+        res.send(user);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  }
 });
 
 app.post("/login", async (req, res) => {
