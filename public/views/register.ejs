@@ -12,24 +12,7 @@
     </style>
   </head>
   <body>
-    <header>
-      <a href="/">Home</a>
-      <% if (moviedata.userName != "" && moviedata.roles == "Admin") { %>
-        <a href="/create">Add Movie</a>
-        <a href="/movieupdate">Update Movie</a>
-        <a href="/moviedelete">Delete Movie</a>
-      <% } %>
-      <% if (moviedata.roles == "User") { %>
-        <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
-      <% } %>
-      <% if (!moviedata.userName) { %>
-        <a href="/register">Register</a>
-        <a href="/login">Login</a>
-      <% } %>
-      <% if (moviedata.userName) { %>
-        <a href="/logout">LogOut</a>
-      <% } %>
-    </header>
+    
     <div class="mainbox">
       <div>
         <h1>NetBoss</h1>
@@ -43,12 +26,12 @@
     
     <form method="post" action="/register">
       <br>
-      <input type="text" name="name" minlength="4" placeholder="Username"/>
+      <input type="text" name="name" minlength="4"  maxlength="10" placeholder="Username"/>
       <br><br>
       <input class="password" type="text" name="password" minlength="6" placeholder="Password"/>
       <input type="submit" value="Register" class="btn"/>
     </form>
-    <p class="signup">Already have an account?⠀<a href="/login">Sign In!</a></p>
+    <p class="signin">Already have an account?⠀<a href="/login">Sign In!</a></p>
   </div>
 </div>
     <a href="/">Back to List</a>

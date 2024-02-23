@@ -1,6 +1,6 @@
 /* 
 Thank you to
-  Coding Journey -> .signup animation
+  Coding Journey -> .signin animation
 */
 @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
 * {
@@ -12,24 +12,16 @@ Thank you to
   font-style: normal;
 }
 
-header {
-  height: 6%;
-  width: 100%;
-  font-size: x-large;
-  background-color: #ffe3e1;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-header a {
-  text-decoration: none;
-  color: #ff9494;
-  font-weight: 600;
+:root {
+  --headerbg: #4f4666;
+  --bg: #2e2a38;
+  --bg2: #b9b4c7;
+  --txt: #faf0e6;
+  --txt2: #212427;
 }
 
 body {
-  background-color: #ffdda3;
+  background-color: var(--bg);
   width: 100%;
   height: 100vh;
 }
@@ -41,14 +33,14 @@ body {
 
 .mainbox {
   width: 100%;
-  height: 94%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .mainbox div:nth-of-type(2) {
-  background-color: #f7f7f7;
+  background-color: var(--bg2);
   border-radius: 0px 15px 15px 0px;
   width: 30%;
   height: 70%;
@@ -59,7 +51,7 @@ body {
 }
 .mainbox div:nth-of-type(1) {
   border-radius: 15px 0px 0px 15px;
-  background-color: #ee4c4c;
+  background-color: var(--headerbg);
   width: 30%;
   height: 70%;
   display: flex;
@@ -78,7 +70,7 @@ input[type="text"] {
   height: 35px;
   width: 260px;
   padding: 10px;
-  background-color: rgb(218, 218, 218);
+  background-color: rgb(245, 245, 245);
 }
 
 .btn {
@@ -89,7 +81,7 @@ input[type="text"] {
   border-radius: 15px;
   border: 2px solid #4caf50;
   background-color: transparent;
-  color: #4caf50;
+  color: var(--txt2);
 }
 
 .btn:hover {
@@ -97,24 +89,25 @@ input[type="text"] {
   background-color: #4caf50;
 }
 
-.signup {
+.signin {
   margin-top: 80px;
   font-size: large;
+  color: var(--txt2);
 }
 
-.signup a {
+.signin a {
   font-size: 20px;
   text-decoration: none;
   color: #ee4c4c;
 }
 
-.signup a {
+.signin a {
   display: inline-block;
   padding-bottom: 0.25rem;
   position: relative;
 }
 
-.signup a::before {
+.signin a::before {
   content: "";
   position: absolute;
   left: 0;
@@ -124,16 +117,18 @@ input[type="text"] {
   background-color: #fd5d5d;
   transition: width 0.25s ease-out;
 }
-.signup a:hover::before {
+.signin a:hover::before {
   width: 100%;
 }
 
 .mainbox div:nth-of-type(1) h1 {
-  font-weight: 700;
+  color: var(--txt);
+  font-weight: 400;
   font-size: 40px;
 }
 
 .mainbox div:nth-of-type(1) p {
+  color: var(--txt);
   font-size: 18px;
   padding: 20px 30px 80px 30px;
 }

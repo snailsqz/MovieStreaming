@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NetBoss</title>
-    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/favorite.css">
     <style>
       .favtxt{
         color: #212427;
@@ -15,22 +15,24 @@
   </head>
   <body>
     <header> 
-      <a href="/">Home</a>
-      <% if (moviedata.userName != "" && moviedata.roles == "Admin") { %>
-      <a href="/create">Add Movie</a>
-      <a href="/movieupdate">Update Movie</a>
-      <a href="/moviedelete">Delete Movie</a>
-      <% }%>
-      <% if (moviedata.roles == "User" ){ %>
-      <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
-      <% }%>
-      <% if (!moviedata.userName) { %>
-      <a href="/register">Register</a>
-      <a href="/login">Login</a>
-      <% } %>
-      <% if (moviedata.userName) { %>
-      <a href="/logout">LogOut</a>
-      <% } %>
+      <header> 
+        <a href="/">Home</a>
+        <% if (moviedata.userName != "" && moviedata.roles == "Admin") { %>
+        <a href="/create">Add Movie</a>
+        <a href="/movieupdate">Update Movie</a>
+        <a href="/moviedelete">Delete Movie</a>
+        <% }%>
+        <% if (moviedata.roles == "User" ){ %>
+        <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
+        <% }%>
+        <% if (!moviedata.userName) { %>
+        <a href="/register">Sign Up</a>
+        <a href="/login">Sign In</a>
+        <% } %>
+        <% if (moviedata.userName) { %>
+        <a href="/logout">Sign out</a>
+        <% } %>
+      </header>
     </header>
     <h1 class="welcome">Your Favorite List!</h1>
     <div class="mainbox">

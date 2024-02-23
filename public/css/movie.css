@@ -1,6 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
+:root {
+  --headerbg: #4f4666;
+  --bg: #2e2a38;
+  --bg2: #b9b4c7;
+  --txt: #faf0e6;
+  --txt2: #212427;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -10,7 +18,7 @@
 }
 
 body {
-  background-color: #fff5e4;
+  background-color: var(--bg);
   height: 100vh;
   overflow-x: hidden;
 }
@@ -19,7 +27,7 @@ header {
   height: 6%;
   width: 100%;
   font-size: x-large;
-  background-color: #ffe3e1;
+  background-color: var(--headerbg);
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -27,7 +35,7 @@ header {
 
 header a {
   text-decoration: none;
-  color: #ff9494;
+  color: var(--txt);
   font-weight: 600;
 }
 
@@ -40,7 +48,7 @@ img {
 
 h2 {
   font-weight: 500;
-  position: absolute;
+  position: fixed;
   right: 0px;
   top: 70px;
   background-color: #17ca1d;

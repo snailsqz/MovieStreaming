@@ -11,7 +11,7 @@
     </style>
   </head>
   <body>
-    <header>
+    <header> 
       <a href="/">Home</a>
       <% if (moviedata.userName != "" && moviedata.roles == "Admin") { %>
       <a href="/create">Add Movie</a>
@@ -22,11 +22,11 @@
       <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
       <% }%>
       <% if (!moviedata.userName) { %>
-      <a href="/register">Register</a>
-      <a href="/login">Login</a>
+      <a href="/register">Sign Up</a>
+      <a href="/login">Sign In</a>
       <% } %>
       <% if (moviedata.userName) { %>
-      <a href="/logout">LogOut</a>
+      <a href="/logout">Sign out</a>
       <% } %>
     </header>
     <h1>Update Movie</h1>
