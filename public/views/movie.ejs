@@ -44,10 +44,10 @@
     </div>
     <div class="box2">
       <% if (checkFavorite) { %>
-        <h2 class="slide-in-right"><i class="fa-regular fa-circle-check"></i>⠀Already in Favorite</h2>
+        <h2 class="fade-in-right "><i class="fa-regular fa-circle-check"></i>⠀Already in Favorite</h2>
       <% } %>
       <% if (favoriteStatus != "") { %>
-        <h2><%=favoriteStatus%></h2>
+        <h2 class="fade-in-right "><i class="fa-regular fa-circle-check"></i>⠀<%=favoriteStatus%></h2>
       <% } %>
       
       <h1><%=movie.title%></h1>
@@ -57,7 +57,6 @@
           <input hidden type="text" name="user_id" value="<%=moviedata.user_id %>">
           <button type="submit" class="btn">Favorite</button>
         </form>
-        
     </div>
   </div>
 </body>

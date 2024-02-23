@@ -31,8 +31,19 @@
       <p class="welcome">Welcome!</p>
     <% } %>
     <div class="mainbox">
-      
-      <% for(var i = 0; i < movies.length; i++){%>
+      <div>
+        <% if (movies.length > 0) { %>
+        <a href="/movie/<%=movies[0].movie_id%>" class="moviedes">
+          <p><%= movies[0].title %></p>
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, fuga!</p>
+        </a> 
+        <a href="/movie/<%=movies[0].movie_id%>"><img src="/images/<%= movies[0].imageFile %>" class="bigimg"></a>
+        <% } else {%>
+          <h1>Let's start add some movie</h1>
+        <% } %>
+      </div>
+
+      <% for(var i = 1; i < movies.length; i++){%>
         <div class="imgitem">
           <a href="/movie/<%=movies[i].movie_id%>"><img src="/images/<%= movies[i].imageFile %>"></a>
           <a href="/movie/<%=movies[i].movie_id%>"><%= movies[i].title %></a>

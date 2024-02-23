@@ -12,6 +12,7 @@
 body {
   background-color: #fff5e4;
   height: 100vh;
+  overflow-x: hidden;
 }
 
 header {
@@ -40,28 +41,43 @@ img {
 h2 {
   font-weight: 500;
   position: absolute;
-  right: 30px;
+  right: 0px;
   top: 70px;
   background-color: #17ca1d;
-  width: 400px;
+  width: 300px;
   padding: 10px 0px 10px 10px;
-  border-radius: 15px;
+  border-radius: 15px 0px 0px 15px;
 }
 
-.slide-in-right {
-  -webkit-animation: slide-in-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
-    both;
-  animation: slide-in-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+.fade-in-right {
+  animation:
+    fade-in-right 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) both,
+    anima 1.5s 1 2s forwards;
 }
 
-@keyframes slide-in-right {
+@keyframes fade-in-right {
   0% {
-    transform: translateX(1000px);
+    -webkit-transform: translateX(50px);
+    transform: translateX(50px);
     opacity: 0;
   }
   100% {
+    -webkit-transform: translateX(0);
     transform: translateX(0);
     opacity: 1;
+  }
+}
+
+@keyframes anima {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(400px);
+    transform: translateX(400px);
+    display: none;
   }
 }
 

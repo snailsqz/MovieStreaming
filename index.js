@@ -234,6 +234,8 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/favorite/:id", authenticateUser, async (req, res) => {
+  app.locals.checkFavorite = "";
+  app.locals.favoriteStatus = "";
   if (app.locals.moviedata.user_id == req.params.id) {
     try {
       const response = await axios.get(base_url + "/favorite/" + req.params.id);
