@@ -26,17 +26,18 @@
       <% } %>
     </header>
     <div class="mainbox">
-      <form method="post" action="/create" enctype="multipart/form-data">
+      <div>
         <h1>Add Movie</h1>
-        <label for="title">Title:</label>
-        <input type="text" name="title" id="title" />
-        <br />
-        <label for="director">Director:</label>
-        <input type="text" name="director" id="director" />
-        <br />
-        <input type="file" name="imageFile" id="" />
-        <input type="submit" value="create" />
-      </form>
+          <form method="post" action="/create" enctype="multipart/form-data">
+            <input type="text" name="title" placeholder="Title"/>
+            <br><br>
+            <input type="text" name="director" placeholder="Director"/>
+            <br><br>
+            <input type="file" name="imageFile" />
+            <br>
+            <input type="submit" value="Add Movie" class="btn"/>
+          </form>
+      </div>
     </div>
   </body>
 </html>

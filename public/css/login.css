@@ -98,6 +98,7 @@ input[type="password"] {
 }
 
 .btn:hover {
+  color: var(--txt2);
   background-color: #4caf50;
 }
 

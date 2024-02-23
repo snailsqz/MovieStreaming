@@ -85,7 +85,7 @@ input[type="text"] {
 }
 
 .btn:hover {
-  color: #212427;
+  color: var(--txt2);
   background-color: #4caf50;
 }
 

@@ -1,5 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
 
+:root {
+  --headerbg: #4f4666;
+  --bg: #2e2a38;
+  --bg2: #b9b4c7;
+  --txt: #faf0e6;
+  --txt2: #212427;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -9,14 +17,14 @@
 }
 
 body {
-  background-color: #fff5e4;
+  background-color: var(--bg);
 }
 
 header {
   height: 50px;
   width: 100%;
   font-size: x-large;
-  background-color: #ffe3e1;
+  background-color: var(--headerbg);
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -24,7 +32,7 @@ header {
 
 header a {
   text-decoration: none;
-  color: #ff9494;
+  color: var(--txt);
   font-weight: 600;
 }
 
@@ -45,7 +53,7 @@ img {
   align-items: center;
   text-decoration: none;
   font-style: normal;
-  color: #ff9494;
+  color: var(--txt);
   font-weight: 600;
   font-size: x-large;
 }
