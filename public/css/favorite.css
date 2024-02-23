@@ -75,6 +75,19 @@ img {
   flex-wrap: wrap;
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--bg2);
+  border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #9894a3;
+}
+
 @media screen and (max-width: 1536px) {
   .imgitem {
     width: 287px;
