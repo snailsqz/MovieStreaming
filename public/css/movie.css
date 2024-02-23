@@ -140,6 +140,7 @@ h2 {
   justify-content: center;
   flex-direction: column;
   position: relative;
+  color: var(--txt);
 }
 
 @media screen and (max-width: 1536px) {
