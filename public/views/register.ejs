@@ -3,32 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/register.css">
     <title>Register</title>
     <style>
-      body {
-        background-color: #2c76c0;
-      }
-      
         #txtPassword{
            -webkit-text-security:disc;
        }
-
     </style>
   </head>
   <body>
-    <h1>Register</h1>
+    <header>
+      <a href="/">Home</a>
+      <% if (moviedata.userName != "" && moviedata.roles == "Admin") { %>
+        <a href="/create">Add Movie</a>
+        <a href="/movieupdate">Update Movie</a>
+        <a href="/moviedelete">Delete Movie</a>
+      <% } %>
+      <% if (moviedata.roles == "User") { %>
+        <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
+      <% } %>
+      <% if (!moviedata.userName) { %>
+        <a href="/register">Register</a>
+        <a href="/login">Login</a>
+      <% } %>
+      <% if (moviedata.userName) { %>
+        <a href="/logout">LogOut</a>
+      <% } %>
+    </header>
+    <div class="mainbox">
+      <div>
+        <h1>NetBoss</h1>
+        <p>Tonight, we gather to affirm the greatness of our nation - not because of the height of our skyscrapers, or the power of our military, or the size of our economy. </p>
+    </div>
+  <div>
+    <h1 class="login">Register</h1>
     <% if (checkUserDupe) { %>
       <p><%=checkUserDupe%></p>
     <% } %>
+    
     <form method="post" action="/register">
-      <label for="name" >Username:</label>
-      <input type="text" name="name" minlength="4"/>
-      <br />
-      <label for="password">Password:</label>
-      <input type="text" name="password" id="txtPassword" minlength="6"/>
-      <br />
-      <input type="submit" value="register" />
+      <br>
+      <input type="text" name="name" minlength="4" placeholder="Username"/>
+      <br><br>
+      <input type="text" name="password" minlength="6" placeholder="Password"/>
+      <input type="submit" value="Register" class="btn"/>
     </form>
+    <p class="signup">Already have an account?⠀<a href="/login">Sign In!</a></p>
+  </div>
+</div>
     <a href="/">Back to List</a>
   </body>
 </html>

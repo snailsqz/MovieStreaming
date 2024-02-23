@@ -37,6 +37,34 @@ img {
   border-radius: 90px;
 }
 
+h2 {
+  font-weight: 500;
+  position: absolute;
+  right: 30px;
+  top: 70px;
+  background-color: #17ca1d;
+  width: 400px;
+  padding: 10px 0px 10px 10px;
+  border-radius: 15px;
+}
+
+.slide-in-right {
+  -webkit-animation: slide-in-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    both;
+  animation: slide-in-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 .btn {
   display: inline-block;
   padding: 0.5rem 1rem;
@@ -87,6 +115,7 @@ img {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  position: relative;
 }
 
 @media screen and (max-width: 1536px) {

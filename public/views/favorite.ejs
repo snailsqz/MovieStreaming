@@ -34,15 +34,15 @@
     </header>
     <h1 class="welcome">Your Favorite List!</h1>
     <div class="mainbox">
-      <% if (favoriteMovie.length == 0) { %>
+      <% if (movies.length == 0) { %>
         <p class="favtxt">No favorite now! Let's add something</p>
       <% } %>
       
-      <% for(let i = 0; i < favoriteMovie.length; i++){%>
+      <% for(let i = 0; i < movies.length; i++){%>
   
         <div class="imgitem">
-          <a href="/movie/<%=movies[favoriteMovie[i] - 1].movie_id%>"><img src="/images/<%= movies[favoriteMovie[i]-1].imageFile %>"></a>
-          <a href="/movie/<%=movies[favoriteMovie[i] - 1].movie_id%>"><%= movies[favoriteMovie[i] - 1].title %></a>
+          <a href="/movie/<%=movies[i].movie_id%>"><img src="/images/<%= movies[i].imageFile %>"></a>
+          <a href="/movie/<%=movies[i].movie_id%>"><%= movies[i].title %></a>
         </div>
       <%}%>
     </div>

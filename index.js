@@ -237,14 +237,7 @@ app.get("/favorite/:id", authenticateUser, async (req, res) => {
   if (app.locals.moviedata.user_id == req.params.id) {
     try {
       const response = await axios.get(base_url + "/favorite/" + req.params.id);
-      let array = [];
-      for (let i = 0; i < response.data.length; i++)
-        array.push(response.data[i].movie_id);
-
-      app.locals.favoriteMovie = array;
-
-      const response2 = await axios.get(base_url + "/movies");
-      res.render("favorite", { movies: response2.data });
+      res.render("favorite", { movies: response.data });
     } catch (err) {
       console.log(err);
       res.status(500).send("error");

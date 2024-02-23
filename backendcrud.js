@@ -243,7 +243,17 @@ app.put("/user/:id", (req, res) => {
 app.get("/favorite/:id", (req, res) => {
   Favorite.findAll({ where: { user_id: req.params.id } })
     .then((e) => {
-      res.json(e);
+      Movies.findAll().then((f) => {
+        let moviearr = [];
+        for (let i = 0; i < e.length; i++) {
+          for (let j = 0; j < f.length; j++) {
+            if (e[i].dataValues.movie_id == f[j].dataValues.movie_id) {
+              moviearr.push(f[j]);
+            }
+          }
+        }
+        res.json(moviearr);
+      });
     })
     .catch((err) => {
       res.status(500).send(err);
