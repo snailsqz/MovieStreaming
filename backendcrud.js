@@ -133,9 +133,23 @@ app.put("/movie/:id", (req, res) => {
       if (!movie) {
         res.status(404).send("Movie not found");
       } else {
+        if (req.body.imageFile != undefined) {
+          const imagePath = path.join(
+            __dirname,
+            `/public/images/${movie.imageFile}`
+          );
+          fs.unlink(imagePath, (err) => {
+            if (err) {
+              console.log("Error deleting file:", err);
+            } else {
+              console.log("File deleted successfully");
+            }
+          });
+        }
         movie
           .update(req.body)
           .then(() => {
+            console.log(req.body);
             res.send(movie);
           })
           .catch((err) => {
@@ -160,8 +174,6 @@ app.delete("/movie/:id", (req, res) => {
         res.status(404).send("Movie not found");
       } else {
         if (movie.imageFile) {
-          console.log("1");
-          console.log(movie.imageFile);
           const imagePath = path.join(
             __dirname,
             `/public/images/${movie.imageFile}`
@@ -324,6 +336,32 @@ app.post("/favorite", async (req, res) => {
     res.send(favorite);
   } catch (error) {
     console.error("Error creating favorite:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.delete("/favorite", async (req, res) => {
+  try {
+    const existingFavorite = await Favorite.findOne({
+      where: {
+        movie_id: req.body.movie_id,
+        user_id: req.body.user_id,
+      },
+    });
+
+    if (!existingFavorite)
+      return res.send.json({ message: "Favorite not found" });
+
+    await Favorite.destroy({
+      where: {
+        movie_id: req.body.movie_id,
+        user_id: req.body.user_id,
+      },
+    });
+
+    res.json({ message: "Favorite successfully deleted" });
+  } catch (error) {
+    console.error("Error deleting favorite:", error);
     res.status(500).send("Internal Server Error");
   }
 });

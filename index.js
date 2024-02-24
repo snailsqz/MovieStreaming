@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
     cb(null, "./public/images");
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + file.originalname);
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
 const upload = multer({ storage: storage });
@@ -142,10 +142,20 @@ app.get("/update/:id", async (req, res) => {
   }
 });
 
-app.post("/update/:id", async (req, res) => {
+app.post("/update/:id", upload.single("imageFile"), async (req, res) => {
   if (req.cookies && req.cookies.userSession == "admin") {
     try {
-      const data = { title: req.body.title, director: req.body.director };
+      let data = {
+        title: req.body.title,
+        director: req.body.director,
+      };
+
+      // If an image file was uploaded, add it to the data
+      if (req.file) {
+        data.imageFile = req.file.filename;
+      }
+
+      console.log(data);
       await axios.put(base_url + "/movie/" + req.params.id, data);
       res.redirect("/");
     } catch (err) {
@@ -300,10 +310,31 @@ app.post("/favorite", authenticateUser, async (req, res) => {
   const response = await axios.post(base_url + "/favorite/", data);
 
   if (response.data.message == "al") {
-    app.locals.checkFavorite = true;
+    console.log(data);
+    try {
+      await axios({
+        method: "delete",
+        url: base_url + "/favorite/",
+        data: data,
+      });
+      app.locals.favoriteStatus = `Unfavorite this movie!`;
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("error");
+    }
   } else app.locals.favoriteStatus = `Add to your favorite!`;
 
   res.redirect("/movie/" + req.body.movie_id);
+});
+
+app.get("/delete/:id", async (req, res) => {
+  try {
+    await axios.delete(base_url + "/movie/" + req.params.id);
+    res.redirect("/moviedelete");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error");
+  }
 });
 
 app.get("/logout", (req, res) => {

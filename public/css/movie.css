@@ -110,6 +110,25 @@ h2 {
 .btn:hover {
   color: #212427;
   background-color: #4caf50;
+  transition: all 0.3s ease;
+}
+
+.btn2 {
+  display: inline-block;
+  position: relative;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 15px;
+  border: 2px solid #4caf50;
+  background-color: transparent;
+  color: #212427;
+  background-color: #4caf50;
+  transition: all 0.3s ease;
+}
+
+.btn2:hover {
+  color: #4caf50;
+  background-color: transparent;
 }
 
 .mainbox {
