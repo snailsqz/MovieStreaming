@@ -233,10 +233,11 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/user/:id", authenticateUser, async (req, res) => {
+app.get("/deleteuser/:id", authenticateUser, async (req, res) => {
   try {
-    const response = await axios.get(base_url + "/user/" + req.params.id);
-    res.render("updateuser", { users: response.data });
+    await axios.delete(base_url + "/user/" + req.params.id);
+    app.locals.moviedata = "";
+    res.redirect("/");
   } catch (err) {
     console.error(err);
     res.status(500).send("error");
@@ -247,6 +248,16 @@ app.post("/user/:id", authenticateUser, async (req, res) => {
   try {
     const data = { name: req.body.name, password: req.body.password };
     await axios.put(base_url + "/user/" + req.params.id, data);
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error");
+  }
+});
+
+app.get("/delete/:id", async (req, res) => {
+  try {
+    await axios.delete(base_url + "/movie/" + req.params.id);
     res.redirect("/");
   } catch (err) {
     console.error(err);

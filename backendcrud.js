@@ -264,6 +264,27 @@ app.put("/user/:id", (req, res) => {
     });
 });
 
+app.delete("/user/:id", (req, res) => {
+  User.findByPk(req.params.id)
+    .then((user) => {
+      if (!user) {
+        res.status(404).send("User not found");
+      } else {
+        user
+          .destroy()
+          .then(() => {
+            res.send({ message: "Delete Successfully" });
+          })
+          .catch((err) => {
+            res.status(500).send(err);
+          });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
 app.get("/favorite/:id", (req, res) => {
   Favorite.findAll({ where: { user_id: req.params.id } })
     .then((e) => {
