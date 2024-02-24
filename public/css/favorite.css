@@ -23,7 +23,6 @@ body {
 header {
   height: 50px;
   width: 100%;
-  font-size: x-large;
   background-color: var(--headerbg);
   display: flex;
   align-items: center;
@@ -32,8 +31,16 @@ header {
 
 header a {
   text-decoration: none;
+  font-size: 24px;
+  font-weight: 400;
   color: var(--txt);
-  font-weight: 600;
+  padding: 2px 7px 4px 7px;
+  transition: all 0.4s;
+  border-radius: 10px;
+}
+
+header a:hover {
+  background-color: #302b3f;
 }
 
 .welcome {
