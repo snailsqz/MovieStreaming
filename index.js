@@ -244,6 +244,16 @@ app.get("/deleteuser/:id", authenticateUser, async (req, res) => {
   }
 });
 
+app.get("/user/:id", async (req, res) => {
+  try {
+    const response = await axios.get(base_url + "/user/" + req.params.id);
+    res.render("updateuser", { users: response.data });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error");
+  }
+});
+
 app.post("/user/:id", authenticateUser, async (req, res) => {
   try {
     const data = { name: req.body.name, password: req.body.password };
@@ -289,8 +299,9 @@ app.post("/favorite", authenticateUser, async (req, res) => {
 
   const response = await axios.post(base_url + "/favorite/", data);
 
-  if (response.data.message == "al") app.locals.checkFavorite = true;
-  else app.locals.favoriteStatus = `Add to your favorite!`;
+  if (response.data.message == "al") {
+    app.locals.checkFavorite = true;
+  } else app.locals.favoriteStatus = `Add to your favorite!`;
 
   res.redirect("/movie/" + req.body.movie_id);
 });

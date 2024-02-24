@@ -15,6 +15,7 @@
   box-sizing: border-box;
   font-family: "Fredoka", sans-serif;
   font-style: normal;
+  transition: all 0.3s;
 }
 
 body {
@@ -93,7 +94,6 @@ header a:hover {
   height: 100%;
   height: 150px;
   object-fit: cover;
-  border-radius: 10px;
 }
 
 .imgitem img:hover {
