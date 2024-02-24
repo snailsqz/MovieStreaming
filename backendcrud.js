@@ -219,6 +219,30 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.get("/users", (req, res) => {
+  User.findAll() //select * from
+    .then((users) => {
+      res.json(users);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+app.get("/user/:id", (req, res) => {
+  User.findByPk(req.params.id)
+    .then((users) => {
+      if (!users) {
+        res.status(404).send("users not found");
+      } else {
+        res.json(users);
+      }
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
 app.put("/user/:id", (req, res) => {
   User.findByPk(req.params.id)
     .then((user) => {

@@ -24,6 +24,7 @@
       <a href="/login">Sign In</a>
       <% } %>
       <% if (moviedata.userName) { %>
+        <a href="/user/<%=moviedata.user_id%>">Edit User</a>
       <a href="/logout">Sign out</a>
       <% } %>
     </header>
