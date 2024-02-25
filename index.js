@@ -25,11 +25,9 @@ const storage = multer.diskStorage({
     cb(null, "./public/images");
   },
   filename: (req, file, cb) => {
-    let shortName = file.originalname.slice(0, 10);
-    cb(null, Date.now() + "-" + shortName);
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
-
 const upload = multer({ storage: storage });
 
 const authenticateUser = (req, res, next) => {
