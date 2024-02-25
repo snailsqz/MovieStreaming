@@ -57,6 +57,7 @@ const User = sequelize.define("user", {
   },
   profilePicture: {
     type: Sequelize.STRING,
+    defaultValue: "noimage.jpg",
     allowNull: true,
   },
 });
