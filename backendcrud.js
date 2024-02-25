@@ -55,6 +55,10 @@ const User = sequelize.define("user", {
     defaultValue: "User",
     allowNull: false,
   },
+  profilePicture: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
 });
 
 const Favorite = sequelize.define("favorite", {
