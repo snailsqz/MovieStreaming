@@ -14,7 +14,7 @@
       <a href="/movieupdate">Update Movie</a>
       <a href="/moviedelete">Delete Movie</a>
       <% }%>
-      <% if (moviedata.roles == "User" ){ %>
+      <% if (moviedata.roles == "User"){ %>
       <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
       <% }%>
       <% if (!moviedata.userName) { %>
