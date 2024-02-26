@@ -55,6 +55,7 @@ app.get("/", async (req, res) => {
       req.session.movieData = {
         userName: "",
         roles: "",
+        profilePicture: "noimage.jpg",
       };
     }
 
@@ -283,7 +284,7 @@ app.post("/login", async (req, res) => {
         user_id: response.data.user.user_id,
         userName: response.data.user.name,
         roles: response.data.user.roles,
-        imageFile: response.data.user.imageFile,
+        profilePicture: response.data.user.profilePicture,
       };
       req.session.checkLogin = "";
       console.log(req.session.movieData);
@@ -339,6 +340,7 @@ app.post(
       const data = { name: req.body.name, password: req.body.password };
       if (req.file) data.profilePicture = req.file.filename;
       await axios.put(base_url + "/user/" + req.params.id, data);
+      req.session.movieData.profilePicture = req.file.filename;
       res.redirect("/");
     } catch (err) {
       console.error(err);

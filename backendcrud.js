@@ -267,10 +267,9 @@ app.put("/user/:id", (req, res) => {
         res.status(404).send("user not found");
       } else {
         if (
-          req.body.imageFile != undefined &&
-          User.profilePicture == "noimage.jpg"
+          req.body.profilePicture != undefined &&
+          user.profilePicture != "noimage.jpg"
         ) {
-          console.log(req.body);
           const imagePath = path.join(
             __dirname,
             `/public/images/${user.profilePicture}`
