@@ -27,7 +27,6 @@
         <img src="../images/noimage.jpg" alt="" class="profile">
         <ul class="dropdown">
           <li><a href="/user/<%=moviedata.user_id%>">Edit User</a></li>
-          <li><a href="/deleteuser/<%=moviedata.user_id%>"onclick="return confirm('You delete really')">Delete User</a></li>
           <li><a href="/logout">Sign out</a></li>
         </ul>
         </li>
@@ -36,13 +35,15 @@
     </header>
     <div class="mainbox">
       <h1>Update User</h1>
-      <form action="/user/<%=users.user_id%>" method="post">
+      <form action="/user/<%=users.user_id%>" method="post" enctype="multipart/form-data">
         <label for="">Username</label>
         <input type="text" name="name" value="<%= users.name%>" />
         <br><br>
         <label for="">Password</label>
         <input type="text" name="password" value="<%= users.password%>"/>
         <br><br>
+        <input type="file" name="imageFile"/>
+        <a href="/deleteuser/<%=moviedata.user_id%>"onclick="return confirm('You delete really')">Delete User</a>
         <input type="submit" value="Update User" class="btn"/>
       </form>
     </div>

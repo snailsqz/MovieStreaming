@@ -283,6 +283,7 @@ app.post("/login", async (req, res) => {
         user_id: response.data.user.user_id,
         userName: response.data.user.name,
         roles: response.data.user.roles,
+        imageFile: response.data.user.imageFile,
       };
       req.session.checkLogin = "";
       console.log(req.session.movieData);
@@ -315,7 +316,7 @@ app.get("/deleteuser/:id", authenticateUser, async (req, res) => {
   }
 });
 
-app.get("/user/:id", async (req, res) => {
+app.get("/user/:id", authenticateUser, async (req, res) => {
   try {
     const response = await axios.get(base_url + "/user/" + req.params.id);
     res.render("updateuser", {
@@ -329,17 +330,23 @@ app.get("/user/:id", async (req, res) => {
   }
 });
 
-app.post("/user/:id", authenticateUser, async (req, res) => {
-  try {
-    const data = { name: req.body.name, password: req.body.password };
-    await axios.put(base_url + "/user/" + req.params.id, data);
-    res.redirect("/");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("error in /user/:id");
-    res.redirect("/");
+app.post(
+  "/user/:id",
+  authenticateUser,
+  upload.single("imageFile"),
+  async (req, res) => {
+    try {
+      const data = { name: req.body.name, password: req.body.password };
+      if (req.file) data.profilePicture = req.file.filename;
+      await axios.put(base_url + "/user/" + req.params.id, data);
+      res.redirect("/");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("error in /user/:id");
+      res.redirect("/");
+    }
   }
-});
+);
 
 app.get("/delete/:id", async (req, res) => {
   try {
