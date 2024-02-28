@@ -12,9 +12,10 @@
       <% if (moviedata.userName != "" && moviedata.roles == "Admin") { %>
       <a href="/create">Add Movie</a>
       <a href="/movieupdate">Update Movie</a>
-      <a href="/moviedelete">Delete Movie</a>
+      <a href="/moviedelete">Delete Movies</a>
+      <a href="/users">Users</a>
       <% }%>
-      <% if (moviedata.roles == "User" ){ %>
+      <% if (moviedata.roles == "User"){ %>
       <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
       <% }%>
       <% if (!moviedata.userName) { %>
@@ -24,7 +25,7 @@
       <% if (moviedata.userName) { %>
       <ul>
         <li>
-          <img src="../images/<%=moviedata.profilePicture%>" alt="" class="profile">
+        <img src="../images/<%=moviedata.profilePicture%>" alt="" class="profile">
         <ul class="dropdown">
           <li><a href="/user/<%=moviedata.user_id%>">Edit User</a></li>
           <li><a href="/logout">Sign out</a></li>

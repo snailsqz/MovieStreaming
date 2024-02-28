@@ -57,7 +57,7 @@ ul {
   list-style: none;
   background-color: var(--headerbg);
   position: relative;
-  transform: translateX(100px);
+  transform: translateX(80px);
   z-index: 999;
 }
 
@@ -119,13 +119,23 @@ ul li:hover ul.dropdown {
 
 table {
   border-collapse: collapse;
-  width: 20%;
+}
+
+table td a {
+  text-decoration: none;
 }
 
 table td {
-  width: 10px;
   padding: 10px;
   color: var(--txt);
+}
+
+table td:nth-of-type(3) {
+  width: 80px;
+}
+
+table td:nth-of-type(4) {
+  width: 80px;
 }
 
 table th {
@@ -137,4 +147,18 @@ table th {
 table th,
 td {
   border-bottom: 1px solid var(--txt2);
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  background-color: var(--headerbg);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--bg2);
+  border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #9894a3;
 }

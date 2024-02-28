@@ -42,6 +42,14 @@ const authenticateUser = (req, res, next) => {
   }
 };
 
+const onlyAdmin = (req, res, next) => {
+  if (req.session.movieData.roles == "Admin") {
+    next();
+  } else {
+    res.redirect("/");
+  }
+};
+
 app.get("/", async (req, res) => {
   try {
     req.session.checkFavorite = false;
@@ -86,15 +94,9 @@ app.get("/movie/:id", async (req, res) => {
   }
 });
 
-app.get("/create", (req, res) => {
+app.get("/create", onlyAdmin, (req, res) => {
   try {
-    if (req.cookies && req.cookies.userSession == "admin") {
-      res.render("create", { moviedata: req.session.movieData });
-    } else if (req.cookies && req.cookies.userSession != "admin") {
-      res.redirect("/");
-    } else {
-      res.redirect("/login");
-    }
+    res.render("create", { moviedata: req.session.movieData });
   } catch (err) {
     console.error(err);
     res.status(500).send("error in /create");
@@ -102,8 +104,11 @@ app.get("/create", (req, res) => {
   }
 });
 
-app.post("/create", upload.single("imageFile"), async (req, res, next) => {
-  if (req.cookies && req.cookies.userSession == "admin") {
+app.post(
+  "/create",
+  onlyAdmin,
+  upload.single("imageFile"),
+  async (req, res, next) => {
     try {
       const data = {
         title: req.body.title,
@@ -117,75 +122,56 @@ app.post("/create", upload.single("imageFile"), async (req, res, next) => {
       res.status(500).send("error in /create");
       res.redirect("/");
     }
-  } else if (req.cookies && req.cookies.userSession != "admin") {
+  }
+);
+
+app.get("/movieupdate", onlyAdmin, async (req, res) => {
+  try {
+    const response = await axios.get(base_url + "/movieupdate");
+    res.render("movieupdate", {
+      movies: response.data,
+      moviedata: req.session.movieData,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error in /movieupdate");
     res.redirect("/");
-  } else {
-    res.redirect("/login");
   }
 });
 
-app.get("/movieupdate", async (req, res) => {
-  if (req.cookies && req.cookies.userSession == "admin") {
-    try {
-      const response = await axios.get(base_url + "/movieupdate");
-      res.render("movieupdate", {
-        movies: response.data,
-        moviedata: req.session.movieData,
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("error in /movieupdate");
-      res.redirect("/");
-    }
-  } else if (req.cookies && req.cookies.userSession != "admin") {
+app.get("/moviedelete", onlyAdmin, async (req, res) => {
+  try {
+    const response = await axios.get(base_url + "/moviedelete");
+    res.render("moviedelete", {
+      movies: response.data,
+      moviedata: req.session.movieData,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error in /moviedelete");
     res.redirect("/");
-  } else {
-    res.redirect("/login");
   }
 });
 
-app.get("/moviedelete", async (req, res) => {
-  if (req.cookies && req.cookies.userSession == "admin") {
-    try {
-      const response = await axios.get(base_url + "/moviedelete");
-      res.render("moviedelete", {
-        movies: response.data,
-        moviedata: req.session.movieData,
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("error in /moviedelete");
-      res.redirect("/");
-    }
-  } else if (req.cookies && req.cookies.userSession != "admin") {
+app.get("/update/:id", onlyAdmin, async (req, res) => {
+  try {
+    const response = await axios.get(base_url + "/movie/" + req.params.id);
+    res.render("update", {
+      movies: response.data,
+      moviedata: req.session.movieData,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error in /update/:id");
     res.redirect("/");
-  } else {
-    res.redirect("/login");
   }
 });
 
-app.get("/update/:id", async (req, res) => {
-  if (req.cookies && req.cookies.userSession == "admin") {
-    try {
-      const response = await axios.get(base_url + "/movie/" + req.params.id);
-      res.render("update", {
-        movies: response.data,
-        moviedata: req.session.movieData,
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("error in /update/:id");
-      res.redirect("/");
-    }
-  } else if (req.cookies && req.cookies.userSession != "admin") {
-    res.redirect("/");
-  } else {
-    res.redirect("/login");
-  }
-});
-
-app.post("/update/:id", upload.single("imageFile"), async (req, res) => {
-  if (req.cookies && req.cookies.userSession == "admin") {
+app.post(
+  "/update/:id",
+  onlyAdmin,
+  upload.single("imageFile"),
+  async (req, res) => {
     try {
       let data = {
         title: req.body.title,
@@ -200,27 +186,17 @@ app.post("/update/:id", upload.single("imageFile"), async (req, res) => {
       res.status(500).send("error in /update/:id");
       res.redirect("/");
     }
-  } else if (req.cookies && req.cookies.userSession != "admin") {
-    res.redirect("/");
-  } else {
-    res.redirect("/login");
   }
-});
+);
 
-app.get("/delete/:id", async (req, res) => {
-  if (req.cookies && req.cookies.userSession == "admin") {
-    try {
-      await axios.delete(base_url + "/movie/" + req.params.id);
-      res.redirect("/moviedelete");
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("error in /delete/:id");
-      res.redirect("/");
-    }
-  } else if (req.cookies && req.cookies.userSession != "admin") {
+app.get("/delete/:id", onlyAdmin, async (req, res) => {
+  try {
+    await axios.delete(base_url + "/movie/" + req.params.id);
+    res.redirect("/moviedelete");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error in /delete/:id");
     res.redirect("/");
-  } else {
-    res.redirect("/login");
   }
 });
 
@@ -308,8 +284,11 @@ app.post("/login", async (req, res) => {
 app.get("/deleteuser/:id", authenticateUser, async (req, res) => {
   try {
     await axios.delete(base_url + "/user/" + req.params.id);
-    req.session.movieData = "";
-    res.redirect("/");
+    if (req.session.movieData.roles == "Admin") res.redirect("/users");
+    else {
+      req.session.movieData = "";
+      res.redirect("/");
+    }
   } catch (err) {
     console.error(err);
     res.status(500).send("error in /deleteuser/:id");
@@ -340,8 +319,9 @@ app.post(
       const data = { name: req.body.name, password: req.body.password };
       if (req.file) data.profilePicture = req.file.filename;
       await axios.put(base_url + "/user/" + req.params.id, data);
-      req.session.movieData.profilePicture = req.file.filename;
-      res.redirect("/");
+      if (req.file) req.session.movieData.profilePicture = req.file.filename;
+      if (req.session.movieData.roles == "Admin") res.redirect("/users");
+      else res.redirect("/");
     } catch (err) {
       console.error(err);
       res.status(500).send("error in /user/:id");
@@ -350,7 +330,18 @@ app.post(
   }
 );
 
-app.get("/delete/:id", async (req, res) => {
+app.get("/admin/:id", onlyAdmin, async (req, res) => {
+  try {
+    await axios.put(base_url + "/admin/" + req.params.id);
+    res.redirect("/users");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error in /admin/:id");
+    res.redirect("/");
+  }
+});
+
+app.get("/delete/:id", onlyAdmin, async (req, res) => {
   try {
     await axios.delete(base_url + "/movie/" + req.params.id);
     res.redirect("/");
@@ -415,17 +406,6 @@ app.post("/favorite", authenticateUser, async (req, res) => {
   }
 });
 
-app.get("/delete/:id", async (req, res) => {
-  try {
-    await axios.delete(base_url + "/movie/" + req.params.id);
-    res.redirect("/moviedelete");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("error in /delete/:id");
-    res.redirect("/");
-  }
-});
-
 app.get("/logout", (req, res) => {
   try {
     res.clearCookie("userSession");
@@ -438,10 +418,9 @@ app.get("/logout", (req, res) => {
   }
 });
 
-app.get("/users", authenticateUser, async (req, res) => {
+app.get("/users", onlyAdmin, async (req, res) => {
   try {
     const response = await axios.get(base_url + "/users");
-    console.log(response.data, "users");
     res.render("users", {
       users: response.data,
       moviedata: req.session.movieData,

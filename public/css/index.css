@@ -188,7 +188,7 @@ ul {
   list-style: none;
   background-color: var(--headerbg);
   position: relative;
-  transform: translateX(100px);
+  transform: translateX(80px);
   z-index: 999;
 }
 

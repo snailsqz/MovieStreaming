@@ -260,6 +260,24 @@ app.get("/user/:id", (req, res) => {
     });
 });
 
+app.put("/admin/:id", (req, res) => {
+  User.findByPk(req.params.id)
+    .then((user) => {
+      if (!user) res.status(404).send("user not found");
+      user
+        .update({ roles: "Admin" })
+        .then(() => {
+          res.send(user);
+        })
+        .catch((err) => {
+          res.status(500).send(err);
+        });
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
 app.put("/user/:id", (req, res) => {
   User.findByPk(req.params.id)
     .then((user) => {
@@ -304,15 +322,26 @@ app.delete("/user/:id", (req, res) => {
       if (!user) {
         res.status(404).send("User not found");
       } else {
-        user
-          .destroy()
-          .then(() => {
-            res.send({ message: "Delete Successfully" });
-          })
-          .catch((err) => {
-            res.status(500).send(err);
-          });
+        const imagePath = path.join(
+          __dirname,
+          `/public/images/${user.profilePicture}`
+        );
+        fs.unlink(imagePath, (err) => {
+          if (err) {
+            console.log("Error deleting file:", err);
+          } else {
+            console.log("File deleted successfully");
+          }
+        });
       }
+      user
+        .destroy()
+        .then(() => {
+          res.send({ message: "Delete Successfully" });
+        })
+        .catch((err) => {
+          res.status(500).send(err);
+        });
     })
     .catch((err) => {
       res.status(500).send(err);
