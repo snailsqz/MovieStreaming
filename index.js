@@ -438,6 +438,21 @@ app.get("/logout", (req, res) => {
   }
 });
 
+app.get("/users", authenticateUser, async (req, res) => {
+  try {
+    const response = await axios.get(base_url + "/users");
+    console.log(response.data, "users");
+    res.render("users", {
+      users: response.data,
+      moviedata: req.session.movieData,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error in /users");
+    res.redirect("/");
+  }
+});
+
 const port = 5500;
 app.listen(port, () => {
   console.log(`Listening on port http://localhost:${port}...`);
