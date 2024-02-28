@@ -38,11 +38,11 @@
     <div class="mainbox">
       <table>
         <tr>
-          <th>Name</th><th>Roles</th><th>Action</th>
+          <th>Name</th><th>Roles</th><th colspan="2" style="text-align: center;">Action</th>
         </tr>
       <% for(let i = 0; i < users.length; i++){%>
           <tr>
-            <td> <%=users[i].name %></td><td><%=users[i].roles %></td><td>Edit</td><td>Delete</td>
+            <td> <%=users[i].name %></td><td><%=users[i].roles %></td><td style="text-align: center; ">Edit</td><td style="text-align: center; ">Delete</td>
           </tr>
       <%}%>
     </table>
