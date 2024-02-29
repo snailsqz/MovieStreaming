@@ -261,6 +261,15 @@ ul li:hover ul.dropdown {
   margin: 3px 10px 0px 10px;
 }
 
+footer {
+  background-color: #211e2969;
+  color: var(--txt);
+  text-align: center;
+  padding: 20px 0px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
 @media screen and (max-width: 1536px) {
   .imgitem {
     width: 287px;
