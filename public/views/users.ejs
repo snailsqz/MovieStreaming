@@ -45,7 +45,7 @@
             <td style="width: 100px; text-align:center;"><%=users[i].name %></td>
             <td style="width: 100px; text-align:center;"><%=users[i].roles %></td>
             <% if (users[i].roles == "Admin") { %>
-              <td><a href="/admin/<%=users[i].user_id%>" style="color:#df6bee; text-decoration:line-through; text-decoration-thickness: 2px;" >Promote</a></td>
+              <td><a href="/admin/<%=users[i].user_id%>" class="promote" >Promote</a></td>
             <% } else {%>
             <td><a href="/admin/<%=users[i].user_id%>"  style="color:#6b6dee">Promote</a></td>
             <% }%>

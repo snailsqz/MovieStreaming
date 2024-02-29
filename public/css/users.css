@@ -149,6 +149,16 @@ td {
   border-bottom: 1px solid var(--txt2);
 }
 
+table td a:hover {
+  text-decoration: 2px underline;
+  text-underline-offset: 5px;
+}
+
+.promote {
+  color: #df6bee;
+  text-decoration: 2px line-through;
+}
+
 ::-webkit-scrollbar {
   width: 7px;
   background-color: var(--headerbg);
