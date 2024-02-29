@@ -443,6 +443,20 @@ app.delete("/favorite", async (req, res) => {
   }
 });
 
+app.get("/typemovie", (req, res) => {
+  Movies.findAll({
+    where: {
+      director: "Nolan",
+    },
+  }) //select * from
+    .then((movies) => {
+      res.json(movies);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () =>
   console.log(`Listening on port http://localhost:${port}...`)

@@ -79,16 +79,18 @@ app.get("/", async (req, res) => {
 
 app.get("/movie/:id", async (req, res) => {
   try {
-    const data = {
-      user_id: req.session.movieData.user_id,
-    };
+    if (req.session.movieData.userName != "") {
+      const data = {
+        user_id: req.session.movieData.user_id,
+      };
+      const response = await axios.post(
+        base_url + "/movie/" + req.params.id,
+        data
+      );
+      req.session.favoriteStatus = response.data.message;
+      console.log(req.session.favoriteStatus, "favoriteStatus");
+    }
 
-    const response = await axios.post(
-      base_url + "/movie/" + req.params.id,
-      data
-    );
-    req.session.favoriteStatus = response.data.message;
-    console.log(req.session.favoriteStatus, "favoriteStatus");
     const response2 = await axios.get(base_url + "/movie/" + req.params.id);
     res.render("movie", {
       movie: response2.data,

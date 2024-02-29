@@ -168,7 +168,7 @@ table th {
 
 table th,
 td {
-  border-bottom: 1px solid var(--txt2);
+  border-bottom: 1.2px solid #543f8f;
 }
 
 table td a:hover {
