@@ -47,11 +47,11 @@
        </div>
     </div>
     <div class="box2">
-      <% if (favoriteStatus == "Unfavorite this movie!") { %>
-        <h2 class="fade-in-right "><i class="fa-solid fa-xmark"></i>⠀<%=favoriteStatus%></h2>
+      <% if (favoriteStatus2 == "Unfavorite this movie!") { %>
+        <h2 class="fade-in-right "><i class="fa-solid fa-xmark"></i>⠀<%=favoriteStatus2%></h2>
       <% } %>
-      <% if (favoriteStatus == "Add to your favorite!") { %>
-        <h2 class="fade-in-right "><i class="fa-regular fa-heart"></i>⠀<%=favoriteStatus%></h2>
+      <% if (favoriteStatus2 == "Add to your favorite!") { %>
+        <h2 class="fade-in-right "><i class="fa-regular fa-heart"></i>⠀<%=favoriteStatus2%></h2>
       <% } %>
       
       <h1><%=movie.title%></h1>
@@ -59,12 +59,9 @@
         <form method="post" action="/favorite">
           <input hidden type="text" name="movie_id" value="<%=movie.movie_id %>">
           <input hidden type="text" name="user_id" value="<%=moviedata.user_id %>">
-          <% if (favoriteStatus == "") { %>
+          <% if (!favoriteStatus) { %>
             <button type="submit" class="btn">Favorite</button>
-          <% } %>
-          <% if (favoriteStatus == "Unfavorite this movie!") { %>
-            <button type="submit" class="btn">Favorite</button>
-          <% } else if(favoriteStatus == "Add to your favorite!"){%>
+          <% } else { %>
             <button type="submit" class="btn2">Unfavorite</button>
           <% } %>
         </form>

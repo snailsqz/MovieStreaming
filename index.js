@@ -52,10 +52,9 @@ const onlyAdmin = (req, res, next) => {
 
 app.get("/", async (req, res) => {
   try {
-    req.session.checkFavorite = false;
     req.session.checkUserDupe = "";
     req.session.checkLogin = "";
-    req.session.favoriteStatus = "";
+    req.session.favoriteStatus2 = "";
     console.log(req.session.movieData, "moviedata");
     const response = await axios.get(base_url + "/movies");
 
@@ -80,11 +79,22 @@ app.get("/", async (req, res) => {
 
 app.get("/movie/:id", async (req, res) => {
   try {
-    const response = await axios.get(base_url + "/movie/" + req.params.id);
+    const data = {
+      user_id: req.session.movieData.user_id,
+    };
+
+    const response = await axios.post(
+      base_url + "/movie/" + req.params.id,
+      data
+    );
+    req.session.favoriteStatus = response.data.message;
+    console.log(req.session.favoriteStatus, "favoriteStatus");
+    const response2 = await axios.get(base_url + "/movie/" + req.params.id);
     res.render("movie", {
-      movie: response.data,
+      movie: response2.data,
       moviedata: req.session.movieData,
       favoriteStatus: req.session.favoriteStatus,
+      favoriteStatus2: req.session.favoriteStatus2,
     });
   } catch (err) {
     console.log(err);
@@ -313,7 +323,7 @@ app.get("/admin/:id", onlyAdmin, async (req, res) => {
 });
 
 app.get("/favorite/:id", authenticateUser, async (req, res) => {
-  req.session.checkFavorite = "";
+  req.session.favoriteStatus2 = "";
   if (req.session.movieData.user_id == req.params.id) {
     try {
       const response = await axios.get(
@@ -322,7 +332,6 @@ app.get("/favorite/:id", authenticateUser, async (req, res) => {
       res.render("favorite", {
         movies: response.data,
         moviedata: req.session.movieData,
-        favoriteStatus: req.session.favoriteStatus,
       });
     } catch (err) {
       console.log(err);
@@ -340,23 +349,23 @@ app.post("/favorite", authenticateUser, async (req, res) => {
       movie_id: req.body.movie_id,
       user_id: req.body.user_id,
     };
-
     const response = await axios.post(base_url + "/favorite/", data);
     if (response.data.message == "al") {
-      console.log(data);
       try {
         await axios({
           method: "delete",
           url: base_url + "/favorite/",
           data: data,
         });
-        req.session.favoriteStatus = `Unfavorite this movie!`;
+        req.session.favoriteStatus2 = `Unfavorite this movie!`;
       } catch (err) {
         console.error(err);
         res.send("error");
         res.redirect("/");
       }
-    } else req.session.favoriteStatus = `Add to your favorite!`;
+    } else {
+      req.session.favoriteStatus2 = `Add to your favorite!`;
+    }
 
     res.redirect("/movie/" + req.body.movie_id);
   } catch (err) {

@@ -122,6 +122,21 @@ app.get("/movie/:id", (req, res) => {
     });
 });
 
+app.post("/movie/:id", async (req, res) => {
+  try {
+    const checkingFavorite = await Favorite.findOne({
+      where: {
+        movie_id: req.params.id,
+        user_id: req.body.user_id,
+      },
+    });
+    if (checkingFavorite) res.json({ message: true });
+    else res.json({ message: false });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 app.post("/movies", (req, res) => {
   Movies.create(req.body)
     .then((movie) => {
