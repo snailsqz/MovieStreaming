@@ -381,13 +381,11 @@ app.get("/favorite/:id", (req, res) => {
     .then((e) => {
       Movies.findAll().then((f) => {
         let moviearr = [];
-        for (let i = 0; i < e.length; i++) {
-          for (let j = 0; j < f.length; j++) {
-            if (e[i].dataValues.movie_id == f[j].dataValues.movie_id) {
+        for (let i = 0; i < e.length; i++)
+          for (let j = 0; j < f.length; j++)
+            if (e[i].dataValues.movie_id == f[j].dataValues.movie_id)
               moviearr.push(f[j]);
-            }
-          }
-        }
+
         res.json(moviearr);
       });
     })
