@@ -12,10 +12,7 @@
     <header> 
       <a href="/">Home</a>
       <% if (moviedata.userName != "" && moviedata.roles == "Admin") { %>
-      <a href="/create">Add Movie</a>
-      <a href="/movieupdate">Update Movie</a>
-      <a href="/moviedelete">Delete Movies</a>
-      <a href="/users">Users</a>
+      <a href="/movies">Movies</a>
       <% }%>
       <% if (moviedata.roles == "User"){ %>
       <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
@@ -48,9 +45,9 @@
             <td style="width: 100px; text-align:center;"><%=users[i].name %></td>
             <td style="width: 100px; text-align:center;"><%=users[i].roles %></td>
             <% if (users[i].roles == "Admin") { %>
-              <td><a href="/admin/<%=users[i].user_id%>" onclick="return confirm('You cannot change this user to User Role again. Do you confirm?')" style="color:#df6bee; text-decoration:line-through; text-decoration-thickness: 2px;" >Promote</a></td>
+              <td><a href="/admin/<%=users[i].user_id%>" style="color:#df6bee; text-decoration:line-through; text-decoration-thickness: 2px;" >Promote</a></td>
             <% } else {%>
-            <td><a href="/admin/<%=users[i].user_id%>" onclick="return confirm('You cannot change this user to User Role again. Do you confirm?')" style="color:#6b6dee">Promote</a></td>
+            <td><a href="/admin/<%=users[i].user_id%>"  style="color:#6b6dee">Promote</a></td>
             <% }%>
             <td style="text-align: center;"><a href="/user/<%=users[i].user_id%>" style="color:#3ff78b">Edit</a></td>
             <td style="text-align: center; "> <a href="/deleteuser/<%=users[i].user_id%>"onclick="return confirm('Do you confirm to delete this user?')" style="color:#f73f3f">Delete</a></td>

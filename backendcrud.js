@@ -264,14 +264,25 @@ app.put("/admin/:id", (req, res) => {
   User.findByPk(req.params.id)
     .then((user) => {
       if (!user) res.status(404).send("user not found");
-      user
-        .update({ roles: "Admin" })
-        .then(() => {
-          res.send(user);
-        })
-        .catch((err) => {
-          res.status(500).send(err);
-        });
+      if (user.roles == "Admin") {
+        user
+          .update({ roles: "User" })
+          .then(() => {
+            res.send(user);
+          })
+          .catch((err) => {
+            res.status(500).send(err);
+          });
+      } else {
+        user
+          .update({ roles: "Admin" })
+          .then(() => {
+            res.send(user);
+          })
+          .catch((err) => {
+            res.status(500).send(err);
+          });
+      }
     })
     .catch((err) => {
       res.status(500).send(err);

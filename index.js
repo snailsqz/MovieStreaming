@@ -67,7 +67,7 @@ app.get("/", async (req, res) => {
       };
     }
 
-    res.render("movies", {
+    res.render("index", {
       movies: response.data,
       moviedata: req.session.movieData,
     });
@@ -81,7 +81,6 @@ app.get("/", async (req, res) => {
 app.get("/movie/:id", async (req, res) => {
   try {
     const response = await axios.get(base_url + "/movie/" + req.params.id);
-    // console.log(response.data);
     res.render("movie", {
       movie: response.data,
       moviedata: req.session.movieData,
@@ -125,34 +124,6 @@ app.post(
   }
 );
 
-app.get("/movieupdate", onlyAdmin, async (req, res) => {
-  try {
-    const response = await axios.get(base_url + "/movieupdate");
-    res.render("movieupdate", {
-      movies: response.data,
-      moviedata: req.session.movieData,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("error in /movieupdate");
-    res.redirect("/");
-  }
-});
-
-app.get("/moviedelete", onlyAdmin, async (req, res) => {
-  try {
-    const response = await axios.get(base_url + "/moviedelete");
-    res.render("moviedelete", {
-      movies: response.data,
-      moviedata: req.session.movieData,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("error in /moviedelete");
-    res.redirect("/");
-  }
-});
-
 app.get("/update/:id", onlyAdmin, async (req, res) => {
   try {
     const response = await axios.get(base_url + "/movie/" + req.params.id);
@@ -180,7 +151,7 @@ app.post(
       if (req.file) data.imageFile = req.file.filename;
       console.log(data);
       await axios.put(base_url + "/movie/" + req.params.id, data);
-      res.redirect("/");
+      res.redirect("/movies");
     } catch (err) {
       console.error(err);
       res.status(500).send("error in /update/:id");
@@ -192,7 +163,7 @@ app.post(
 app.get("/delete/:id", onlyAdmin, async (req, res) => {
   try {
     await axios.delete(base_url + "/movie/" + req.params.id);
-    res.redirect("/moviedelete");
+    res.redirect("/movies");
   } catch (err) {
     console.error(err);
     res.status(500).send("error in /delete/:id");
@@ -341,17 +312,6 @@ app.get("/admin/:id", onlyAdmin, async (req, res) => {
   }
 });
 
-app.get("/delete/:id", onlyAdmin, async (req, res) => {
-  try {
-    await axios.delete(base_url + "/movie/" + req.params.id);
-    res.redirect("/");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("error in /delete/:id");
-    res.redirect("/");
-  }
-});
-
 app.get("/favorite/:id", authenticateUser, async (req, res) => {
   req.session.checkFavorite = "";
   if (req.session.movieData.user_id == req.params.id) {
@@ -428,6 +388,20 @@ app.get("/users", onlyAdmin, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("error in /users");
+    res.redirect("/");
+  }
+});
+
+app.get("/movies", onlyAdmin, async (req, res) => {
+  try {
+    const response = await axios.get(base_url + "/movies");
+    res.render("movies", {
+      movies: response.data,
+      moviedata: req.session.movieData,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error in /movies");
     res.redirect("/");
   }
 });
