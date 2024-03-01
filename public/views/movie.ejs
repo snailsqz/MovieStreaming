@@ -59,7 +59,7 @@
           return videoUrl;
         }%>
         <% const embedUrl = getEmbedUrl(movie.teaser_url); %>
-        <iframe width="900" height="400"
+        <iframe width="750" height="400"
           src=<%=embedUrl%>
           frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
           </iframe>
@@ -91,6 +91,46 @@
             <button type="submit" class="btn2">Unfavorite</button>
           <% } %>
         </form>
+    </div>
+  </div>
+  <div class="box3">
+    <hr>
+    <h1>Comment Section</h1>
+    <div class="boxreview">
+      <% if (moviedata.userName != "" ) { %>
+      <form method="post" action="/movie/<%=movie.movie_id%>" class="formment">
+        <textarea required name="comment" id="commenting" cols="30" rows="5" placeholder="Comment Here"  oninvalid="this.setCustomValidity('Please Comment First')"
+        oninput="this.setCustomValidity('')"></textarea>
+        <input type="submit" value="Comment">
+       </form>
+       <% } else { %>
+        <p style="color: #faf0e6; font-size: 30px;">Please login before comment</p>
+       <% } %>
+    </div>
+    <div class="boxread">
+      <% for(let i = 0; i < reviewData.length; i++){ %>
+        <div class="eachcom">
+        <% for(let j = 0; j < userData.length; j++){ %>
+          <% if(userData[j].user_id == reviewData[i].user_id) { %>
+            
+            <div class="profcom">
+              <img src="/images/<%= userData[j].profilePicture %> " alt="">
+            </div>
+            <div class="comsect">
+              <p>
+                <%= userData[j].name %>&nbsp <br>
+              </p>
+              <p>
+                <%= reviewData[i].comment %>
+                <% if (mycommentID == userData[j].user_id) { %> <br>
+                <a href="/deletereview/<%=reviewData[i].review_id%>" onclick="return confirm('Do you confirm?')">Remove</a>
+                <% } %>
+              </p>
+            </div>
+          <% } %>
+        <% } %>
+        </div>
+      <% } %>
     </div>
   </div>
 </body>

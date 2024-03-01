@@ -15,6 +15,7 @@
   box-sizing: border-box;
   font-family: "Fredoka", sans-serif;
   font-style: normal;
+  transition: all 0.3s;
 }
 
 body {
@@ -290,6 +291,128 @@ ul li:hover ul.dropdown {
   border: 2px solid var(--txt);
   object-fit: cover;
   margin: 3px 10px 0px 10px;
+}
+
+.box3 {
+  width: 100%;
+  height: 100%;
+}
+
+.box3 .boxreview {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+textarea {
+  font-size: 20px;
+  width: 300px;
+  height: 150px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px 0 0 5px;
+  border: none;
+  box-sizing: border-box;
+  resize: none;
+  vertical-align: top;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+input[type="submit"] {
+  padding: 10px;
+  height: 150px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  font-size: 16px;
+  vertical-align: top;
+  margin-left: -5px;
+}
+
+input[type="submit"]:hover {
+  background-color: #317233;
+}
+
+.box3 .boxread {
+  margin-top: 50px;
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.box3 .boxread .eachcom {
+  height: 90px;
+  width: 70%;
+  display: flex;
+  margin-bottom: 30px;
+  background-color: #b5c0d0;
+  padding: 5px;
+  position: relative;
+  border-radius: 40px;
+}
+
+.box3 .boxread .profcom {
+  height: 100%;
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+.box3 .boxread .profcom img {
+  border-radius: 50%;
+  width: 70px;
+}
+
+.box3 .boxread .comsect {
+  width: 92%;
+  height: 100%;
+}
+
+.box3 .boxread p:nth-of-type(1) {
+  color: #201658;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.box3 .boxread p:nth-of-type(2) {
+  color: #1b1a55;
+  word-wrap: break-word;
+  margin-left: 1px;
+}
+
+.box3 .boxread p a {
+  color: #c90a0a;
+  right: 2%;
+  top: 5%;
+  text-decoration: none;
+  position: absolute;
+}
+
+.box3 .boxread p a:hover {
+  text-decoration: 2px underline;
+  text-underline-offset: 3px;
+  transition: 0.5s ease-out;
+}
+
+.box3 h1 {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--txt);
+  padding: 30px;
+}
+
+.box3 hr {
+  width: 100%;
+  margin: 70px 0;
 }
 
 @media screen and (max-width: 1536px) {

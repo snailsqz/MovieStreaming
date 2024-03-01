@@ -90,17 +90,37 @@ app.get("/movie/:id", async (req, res) => {
       req.session.favoriteStatus = response.data.message;
       console.log(req.session.favoriteStatus, "favoriteStatus");
     }
-
     const response2 = await axios.get(base_url + "/movie/" + req.params.id);
+    req.session.movieid = response2.data[1].movie_id;
+
     res.render("movie", {
-      movie: response2.data,
+      movie: response2.data[1],
       moviedata: req.session.movieData,
       favoriteStatus: req.session.favoriteStatus,
+      reviewData: response2.data[0],
+      userData: response2.data[2],
+      mycommentID: req.session.movieData.user_id,
       favoriteStatus2: req.session.favoriteStatus2,
     });
   } catch (err) {
     console.log(err);
     res.status(500).send("error in /movie/:id");
+    res.redirect("/");
+  }
+});
+
+app.post("/movie/:id", async (req, res) => {
+  try {
+    const data = {
+      movie_id: req.params.id,
+      user_id: req.session.movieData.user_id,
+      comment: req.body.comment,
+    };
+    await axios.post(base_url + "/review/" + req.params.id, data);
+    res.redirect("/movie/" + req.params.id);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error in /comment");
     res.redirect("/");
   }
 });
@@ -456,6 +476,17 @@ app.get("/typeseries", async (req, res) => {
     console.error(err);
     res.status(500).send("error in /typeseries");
     res.redirect("/");
+  }
+});
+
+app.get("/deletereview/:id", async (req, res) => {
+  try {
+    console.log(req.params.id);
+    await axios.delete(base_url + "/review/" + req.params.id);
+    res.redirect("/movie/" + req.session.movieid);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error delete");
   }
 });
 

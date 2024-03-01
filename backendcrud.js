@@ -102,6 +102,28 @@ const Favorite = sequelize.define("favorite", {
   },
 });
 
+const Review = sequelize.define("review", {
+  review_id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  movie_id: {
+    type: Sequelize.INTEGER,
+  },
+  user_id: {
+    type: Sequelize.INTEGER,
+  },
+  score: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+  },
+  comment: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+});
+
 sequelize.sync(); //if table not exist create
 
 app.get("/movies", (req, res) => {
@@ -137,11 +159,13 @@ app.get("/moviedelete/", (req, res) => {
 app.get("/movie/:id", (req, res) => {
   Movies.findByPk(req.params.id)
     .then((movie) => {
-      if (!movie) {
-        res.status(404).send("Movie not found");
-      } else {
-        res.json(movie);
-      }
+      Review.findAll({ where: { movie_id: req.params.id } }).then((review) => {
+        User.findAll().then((users) => {
+          let ar = [review, movie, users];
+          console.log(review, movie, users);
+          res.json(ar);
+        });
+      });
     })
     .catch((err) => {
       res.status(500).send(err);
@@ -211,6 +235,11 @@ app.put("/movie/:id", (req, res) => {
 
 app.delete("/movie/:id", (req, res) => {
   Favorite.destroy({
+    where: {
+      movie_id: req.params.id,
+    },
+  });
+  Review.destroy({
     where: {
       movie_id: req.params.id,
     },
@@ -496,6 +525,49 @@ app.get("/typeseries", (req, res) => {
     .catch((err) => {
       res.status(500).send(err);
     });
+});
+
+app.get("/review/:id", (req, res) => {
+  Review.findAll({ where: { review_id: req.params.id } }) // find where review id = id on URL
+    .then((reviews) => {
+      res.json(reviews);
+      // console.log(reviews);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+app.post("/review/:id", async (req, res) => {
+  try {
+    const review = await Review.create({
+      movie_id: req.body.movie_id,
+      user_id: req.body.user_id,
+      // score: req.body.score,
+      comment: req.body.comment,
+    });
+
+    res.send(review);
+  } catch (error) {
+    console.error("Error creating favorite:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// route to delete a review
+app.delete("/review/:id", async (req, res) => {
+  try {
+    await Review.destroy({
+      where: {
+        review_id: req.params.id,
+      },
+    });
+
+    res.json({ message: "Review successfully deleted" });
+  } catch (error) {
+    console.error("Error deleting favorite:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 const port = process.env.PORT || 3000;
