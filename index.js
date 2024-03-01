@@ -124,6 +124,7 @@ app.post(
       const data = {
         title: req.body.title,
         director: req.body.director,
+        type: req.body.type,
         imageFile: req.file.filename,
       };
       await axios.post(base_url + "/movies", data);
@@ -159,6 +160,7 @@ app.post(
       let data = {
         title: req.body.title,
         director: req.body.director,
+        type: req.body.type,
       };
       if (req.file) data.imageFile = req.file.filename;
       console.log(data);
@@ -413,6 +415,34 @@ app.get("/movies", onlyAdmin, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("error in /movies");
+    res.redirect("/");
+  }
+});
+
+app.get("/typemovie", async (req, res) => {
+  try {
+    const response = await axios.get(base_url + "/typemovie");
+    res.render("typemovie", {
+      movies: response.data,
+      moviedata: req.session.movieData,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error in /typemovie");
+    res.redirect("/");
+  }
+});
+
+app.get("/typeseries", async (req, res) => {
+  try {
+    const response = await axios.get(base_url + "/typeseries");
+    res.render("typeseries", {
+      movies: response.data,
+      moviedata: req.session.movieData,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error in /typeseries");
     res.redirect("/");
   }
 });

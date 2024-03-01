@@ -41,7 +41,7 @@
     <div class="mainbox">
       <table>
         <tr>
-          <th></th><th style="text-align:center;">ID</th><th style="text-align:center;">Title</th><th style="text-align:center;">Director</th><th colspan="2" style="text-align: center;">Action</th>
+          <th></th><th style="text-align:center;">ID</th><th style="text-align:center;">Title</th><th style="text-align:center;">Director</th><th style="text-align:center;">Type</th><th colspan="2" style="text-align: center;">Action</th>
         </tr>
       <% for(let i = 0; i < movies.length; i++){%>
           <tr>
@@ -49,6 +49,7 @@
             <td style="text-align: center; width: 50px;"><%=movies[i].movie_id%></td>
             <td style="max-width: 150px; text-align:center;"><%=movies[i].title %></td>
             <td style="max-width: 150px; text-align:center;"><%=movies[i].director %></td>
+            <td style="max-width: 150px; text-align:center;"><%=movies[i].type %></td>
             <td style="text-align: center; width: 80px;"><a href="/update/<%=movies[i].movie_id%>" style="color:#3ff78b">Edit</a></td>
             <td style="text-align: center; width: 80px;"> <a href="/delete/<%=movies[i].movie_id%>"onclick="return confirm('Do you confirm to delete this movie?')" style="color:#f73f3f">Delete</a></td>
           </tr>

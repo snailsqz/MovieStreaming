@@ -44,6 +44,12 @@
       <label for="author">Author:</label>
       <input type="text"name="director" value="<%= movies.director%>"/>
       <br>
+      <label for="">Type:</label>
+        <select name="type">
+          <option name="type" value="Movie">Movie</option>
+          <option name="type" value="Series">Series</option>
+        </select>
+      <br>
       <input type="file" name="imageFile"/>
       <input type="submit" value="Update" />
     </form>

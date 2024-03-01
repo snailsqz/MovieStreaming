@@ -18,6 +18,10 @@
       <div class="headerbox1">
         <img src="../images/Logo_JS_Pro.png" alt="">
         <a href="/">Home</a>
+        <% if(moviedata.roles != "Admin" ){ %>
+          <a href="/typemovie">Movies</a>
+          <a href="/typeseries">Series</a>
+        <% }%>
         <% if (moviedata.userName != "" && moviedata.roles == "Admin") { %>
           <a href="/movies">Movies</a>
           <a href="/users">Users</a>

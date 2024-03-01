@@ -30,6 +30,26 @@ const Movies = sequelize.define("movie", {
     type: Sequelize.STRING,
     allowNull: true,
   },
+  type: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  release_date: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  rating: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  genre: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  running_time: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
   imageFile: {
     type: Sequelize.STRING,
     allowNull: true,
@@ -138,6 +158,7 @@ app.post("/movie/:id", async (req, res) => {
 });
 
 app.post("/movies", (req, res) => {
+  console.log(req.body);
   Movies.create(req.body)
     .then((movie) => {
       res.send(movie);
@@ -446,7 +467,21 @@ app.delete("/favorite", async (req, res) => {
 app.get("/typemovie", (req, res) => {
   Movies.findAll({
     where: {
-      director: "Nolan",
+      type: "Movie",
+    },
+  }) //select * from
+    .then((movies) => {
+      res.json(movies);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+app.get("/typeseries", (req, res) => {
+  Movies.findAll({
+    where: {
+      type: "Series",
     },
   }) //select * from
     .then((movies) => {

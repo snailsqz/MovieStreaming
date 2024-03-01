@@ -14,15 +14,15 @@
         <img src="../images/Logo_JS_B_shade_white.png" alt="">
         <a href="/">Home</a>
         <% if(moviedata.roles != "Admin" ){ %>
-          <a href="/typemovie">Movies</a>
-          <a href="/typeseries">Series</a>
-        <% }%>
+            <a href="/typemovie">Movies</a>
+            <a href="/typeseries">Series</a>
+          <% }%>
         <% if (moviedata.userName != "" && moviedata.roles == "Admin") { %>
           <a href="/movies">Movies</a>
           <a href="/users">Users</a>
-        <% }%>
+          <% }%>
         <% if (moviedata.roles == "User"){ %>
-          <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
+        <a href="/favorite/<%=moviedata.user_id%>">Favorite</a>
         <% }%>
       </div>
       <div class="headerbox2"> 
@@ -42,11 +42,6 @@
       </div>
       <% } %>
     </header>
-    <% if (moviedata.userName) { %>
-      <h2 class="fade-in-right "><i class="fa-solid fa-hands-clapping"></i> Welcome, <%= moviedata.userName %> !</h2>
-    <% } else { %>
-      <h2 class="fade-in-right " style="width: 170px;"><i class="fa-solid fa-hands-clapping"></i> Welcome !</h2>
-    <% } %>
     <div class="mainbox">
       <div>
         <% if (movies.length > 0) { %>
