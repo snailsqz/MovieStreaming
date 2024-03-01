@@ -113,6 +113,7 @@ const Review = sequelize.define("review", {
   },
   user_id: {
     type: Sequelize.INTEGER,
+    defaultValue: 0,
   },
   score: {
     type: Sequelize.INTEGER,
@@ -543,7 +544,7 @@ app.post("/review/:id", async (req, res) => {
     const review = await Review.create({
       movie_id: req.body.movie_id,
       user_id: req.body.user_id,
-      // score: req.body.score,
+      score: req.body.score,
       comment: req.body.comment,
     });
 

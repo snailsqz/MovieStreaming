@@ -114,8 +114,10 @@ app.post("/movie/:id", async (req, res) => {
     const data = {
       movie_id: req.params.id,
       user_id: req.session.movieData.user_id,
+      score: req.body.score,
       comment: req.body.comment,
     };
+    console.log(req.body.score, "score");
     await axios.post(base_url + "/review/" + req.params.id, data);
     res.redirect("/movie/" + req.params.id);
   } catch (err) {

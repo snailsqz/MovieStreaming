@@ -6,6 +6,7 @@
   <title>Movie</title>
   <link rel="stylesheet" href="../css/movie.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
   <header> 
@@ -56,6 +57,11 @@
             const videoId = videoUrl.split("v=")[1];
             return `https://www.youtube.com/embed/${videoId}`;
           }
+          else(videoUrl.includes("youtu.be.com"))
+          {
+            const videoId = videoUrl.split(".be/")[1];
+            return `https://www.youtube.com/embed/${videoId}`;
+          }
           return videoUrl;
         }%>
         <% const embedUrl = getEmbedUrl(movie.teaser_url); %>
@@ -98,10 +104,14 @@
     <h1>Comment Section</h1>
     <div class="boxreview">
       <% if (moviedata.userName != "" ) { %>
+        <label for="">Score</label>  
       <form method="post" action="/movie/<%=movie.movie_id%>" class="formment">
-        <textarea required name="comment" id="commenting" cols="30" rows="5" placeholder="Comment Here"  oninvalid="this.setCustomValidity('Please Comment First')"
-        oninput="this.setCustomValidity('')"></textarea>
-        <input type="submit" value="Comment">
+        <input type="number" name="score" id="myinput" min="0" max="5"  placeholder="0" >
+        <div>
+          <textarea required name="comment" id="commenting" cols="30" rows="5" placeholder="Comment Here"  oninvalid="this.setCustomValidity('Please Comment First')"
+          oninput="this.setCustomValidity('')"></textarea>
+          <input type="submit" value="Comment">
+        </div>
        </form>
        <% } else { %>
         <p style="color: #faf0e6; font-size: 30px;">Please login before comment</p>
@@ -112,12 +122,10 @@
         <div class="eachcom">
         <% for(let j = 0; j < userData.length; j++){ %>
           <% if(userData[j].user_id == reviewData[i].user_id) { %>
-            
             <div class="profcom">
               <img src="/images/<%= userData[j].profilePicture %> " alt="">
             </div>
             <div class="comsect">
-              
               <% function formatDateTime(dateTime) {
                 const date = new Date(dateTime);
                 const hours = date.getHours().toString().padStart(2, '0');
@@ -129,11 +137,13 @@
               }%>
               <% datetime = formatDateTime(reviewData[i].createdAt); %>
               <div class="usersect">
-                <p><%= userData[j].name %></p>
+                <p style="font-weight: 500;"><%= userData[j].name %></p>
                 <p style="margin-top: 1px; margin-left: 5px;"><%= datetime %><br></p>
               </div>
-              
-              <p>
+
+              <p class="usercomment">
+                <%= reviewData[i].score%> / 5
+                |
                 <%= reviewData[i].comment %>
                 <% if (mycommentID == userData[j].user_id) { %> <br>
                 <a href="/deletereview/<%=reviewData[i].review_id%>" onclick="return confirm('Do you confirm?')">Remove</a>
@@ -146,5 +156,10 @@
       <% } %>
     </div>
   </div>
+  <script>
+    document.getElementById('myinput').addEventListener('keydown', function(e) {
+        e.preventDefault();
+    });
+  </script>
 </body>
 </html>
