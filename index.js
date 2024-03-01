@@ -92,7 +92,7 @@ app.get("/movie/:id", async (req, res) => {
     }
     const response2 = await axios.get(base_url + "/movie/" + req.params.id);
     req.session.movieid = response2.data[1].movie_id;
-
+    console.log(response2.data[0]);
     res.render("movie", {
       movie: response2.data[1],
       moviedata: req.session.movieData,

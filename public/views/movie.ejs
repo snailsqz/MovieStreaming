@@ -117,9 +117,22 @@
               <img src="/images/<%= userData[j].profilePicture %> " alt="">
             </div>
             <div class="comsect">
-              <p>
-                <%= userData[j].name %>&nbsp <br>
-              </p>
+              
+              <% function formatDateTime(dateTime) {
+                const date = new Date(dateTime);
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                const year = date.getFullYear();
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                return `${hours}:${minutes} ${year}/${month}/${day}`;
+              }%>
+              <% datetime = formatDateTime(reviewData[i].createdAt); %>
+              <div class="usersect">
+                <p><%= userData[j].name %></p>
+                <p style="margin-top: 1px; margin-left: 5px;"><%= datetime %><br></p>
+              </div>
+              
               <p>
                 <%= reviewData[i].comment %>
                 <% if (mycommentID == userData[j].user_id) { %> <br>

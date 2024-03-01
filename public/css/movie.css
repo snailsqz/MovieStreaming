@@ -415,6 +415,11 @@ input[type="submit"]:hover {
   margin: 70px 0;
 }
 
+.usersect {
+  display: flex;
+  align-items: center;
+}
+
 @media screen and (max-width: 1536px) {
 }
 
