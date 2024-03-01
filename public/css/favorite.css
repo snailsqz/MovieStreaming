@@ -59,7 +59,7 @@ header a {
   padding: 4px 10px 6px 10px;
   transition: all 0.4s;
   border-radius: 10px;
-  font-weight: 500;
+  font-weight: 700;
   font-family: "M PLUS Rounded 1c", sans-serif;
 }
 
@@ -93,9 +93,9 @@ img {
   text-decoration: none;
   font-style: normal;
   color: var(--txt);
-  font-weight: 700;
+  font-weight: 400;
   font-size: x-large;
-  font-family: "Raleway", sans-serif;
+  font-family: "Fredoka", sans-serif;
 }
 
 .mainbox {

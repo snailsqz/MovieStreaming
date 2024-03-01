@@ -51,8 +51,17 @@
         <% } %>
       </div>
       <div>
-        <iframe width="800" height="400"
-          src="https://www.youtube.com/embed/tgbNymZ7vqY">
+        <% function getEmbedUrl(videoUrl) {
+          if (videoUrl.includes("youtube.com")) {
+            const videoId = videoUrl.split("v=")[1];
+            return `https://www.youtube.com/embed/${videoId}`;
+          }
+          return videoUrl;
+        }%>
+        <% const embedUrl = getEmbedUrl(movie.teaser_url); %>
+        <iframe width="900" height="400"
+          src=<%=embedUrl%>
+          frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
           </iframe>
       </div>
     </div>
@@ -64,9 +73,15 @@
         <h2 class="fade-in-right "><i class="fa-regular fa-heart"></i>⠀<%=favoriteStatus2%></h2>
       <% } %>
       
-      <h1><%=movie.title%></h1>
+        <h1><%=movie.title%></h1>
+        <p style="text-indent: 30px ; text-align:justify; margin-bottom:30px;"><%=movie.desc%></p>
+        <hr style="margin-bottom:30px;">
         <p>Director: <%=movie.director%></p>
+        <p>Genre: <%=movie.genre%></p>
+        <p>Release Date: <%=movie.release_date%></p>
         <p>Type: <%=movie.type%></p>
+        <p>Rating: <%=movie.rating%></p>
+        <p>Running Time: <%=movie.running_time%> Minutes</p>
         <form method="post" action="/favorite">
           <input hidden type="text" name="movie_id" value="<%=movie.movie_id %>">
           <input hidden type="text" name="user_id" value="<%=moviedata.user_id %>">

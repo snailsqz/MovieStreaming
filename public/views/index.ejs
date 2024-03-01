@@ -52,7 +52,7 @@
         <% if (movies.length > 0) { %>
         <a href="/movie/<%=movies[0].movie_id%>" class="moviedes">
           <p><%= movies[0].title %></p>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, fuga!</p>
+          <p><%= movies[0].desc%></p>
         </a> 
         <a href="/movie/<%=movies[0].movie_id%>"><img src="/images/<%= movies[0].imageFile %>" class="bigimg"></a>
         <% } else {%>

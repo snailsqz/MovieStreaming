@@ -40,7 +40,7 @@
     <div class="mainbox">
       <table>
         <tr>
-          <th colspan="2" style="text-align:end;">ID</th><th style="text-align:center;">Name</th><th style="text-align:center;">Roles</th><th colspan="3" style="text-align: center;">Action</th>
+          <th></th><th colspan="1" style="text-align:center;">ID</th><th style="text-align:center;">Name</th><th style="text-align:center;">Roles</th><th colspan="3" style="text-align: center;">Action</th>
         </tr>
       <% for(let i = 0; i < users.length; i++){%>
           <tr>
@@ -51,10 +51,11 @@
             <% if (users[i].roles == "Admin") { %>
               <td><a href="/admin/<%=users[i].user_id%>" class="promote" >Promote</a></td>
             <% } else {%>
-            <td><a href="/admin/<%=users[i].user_id%>"  style="color:#6b6dee">Promote</a></td>
+            <td><a href="/admin/<%=users[i].user_id%>"  style="color:#6b6dee; width: 80px;">Promote</a></td>
             <% }%>
-            <td style="text-align: center;"><a href="/user/<%=users[i].user_id%>" style="color:#3ff78b">Edit</a></td>
-            <td style="text-align: center; "> <a href="/deleteuser/<%=users[i].user_id%>"onclick="return confirm('Do you confirm to delete this user?')" style="color:#f73f3f">Delete</a></td>
+            <td style="text-align: center; width: 80px;"><a href="/user/<%=users[i].user_id%>" style="color:#3ff78b">Edit</a></td>
+            <td style="text-align: center; width: 80px;"> <a href="/deleteuser/<%=users[i].user_id%>"
+              onclick="return confirm('Do you confirm to delete this user?')" style="color:#f73f3f">Delete</a></td>
           </tr>
       <%}%>
     </table>

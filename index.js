@@ -125,8 +125,14 @@ app.post(
         title: req.body.title,
         director: req.body.director,
         type: req.body.type,
-        imageFile: req.file.filename,
+        desc: req.body.desc,
+        release_date: req.body.release_date,
+        rating: req.body.rating,
+        genre: req.body.genre,
+        running_time: req.body.running_time,
       };
+      if (req.file) data.imageFile = req.file.filename;
+      if (req.body.teaser_url) data.teaser_url = req.body.teaser_url;
       await axios.post(base_url + "/movies", data);
       res.redirect("/");
     } catch (err) {
@@ -161,6 +167,12 @@ app.post(
         title: req.body.title,
         director: req.body.director,
         type: req.body.type,
+        teaser_url: req.body.teaser_url,
+        desc: req.body.desc,
+        release_date: req.body.release_date,
+        rating: req.body.rating,
+        genre: req.body.genre,
+        running_time: req.body.running_time,
       };
       if (req.file) data.imageFile = req.file.filename;
       console.log(data);

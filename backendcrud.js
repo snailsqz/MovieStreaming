@@ -52,6 +52,12 @@ const Movies = sequelize.define("movie", {
   },
   imageFile: {
     type: Sequelize.STRING,
+    defaultValue: "600x300.png",
+    allowNull: true,
+  },
+  teaser_url: {
+    type: Sequelize.STRING,
+    defaultValue: "https://www.youtube.com/watch?v=Gu6btHfa0wI",
     allowNull: true,
   },
 });
