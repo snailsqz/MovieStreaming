@@ -269,9 +269,18 @@ footer {
   background-color: #211e2969;
   color: var(--txt);
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   padding: 20px 0px;
   font-size: 14px;
   font-weight: 300;
+}
+table th {
+  color: var(--txt);
+  font-size: 18px;
+  font-weight: 400;
 }
 
 @media screen and (max-width: 1536px) {
