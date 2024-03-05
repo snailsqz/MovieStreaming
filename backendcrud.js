@@ -113,11 +113,11 @@ const Review = sequelize.define("review", {
   },
   user_id: {
     type: Sequelize.INTEGER,
-    defaultValue: 0,
   },
   score: {
     type: Sequelize.INTEGER,
     allowNull: true,
+    defaultValue: 0,
   },
   comment: {
     type: Sequelize.STRING,
