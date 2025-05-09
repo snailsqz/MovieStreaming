@@ -36,7 +36,7 @@ This project demonstrates full **CRUD** operations, allowing admins to manage mo
 - Git Clone It
 - npm install
 - Make sure you have SQLite installed
-- npm run runfrontend & npm run runbackend
+- npm run runbackend & npm run runfrontend in npm scripts
 ---
 
 Feel free to explore, contribute, or use this as a starting point for your own projects! 🚀
