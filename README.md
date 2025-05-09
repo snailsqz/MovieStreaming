@@ -33,11 +33,10 @@ This project demonstrates full **CRUD** operations, allowing admins to manage mo
 - Learn and apply authentication and user management in a web app.
 
 ## 📥 Installation and Usage
-1.Git Clone It
-2.npm install
-3.Make sure you have SQLite installed
-4.npm run runfrontend 
-5.npm run runbackend
+- Git Clone It
+- npm install
+- Make sure you have SQLite installed
+- npm run runfrontend & npm run runbackend
 ---
 
 Feel free to explore, contribute, or use this as a starting point for your own projects! 🚀
