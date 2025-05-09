@@ -38,5 +38,5 @@ This project demonstrates full **CRUD** operations, allowing admins to manage mo
 - Make sure you have SQLite installed
 - npm run runbackend & npm run runfrontend in npm scripts
 ---
-
+**no responsive yet :) <br>
 Feel free to explore, contribute, or use this as a starting point for your own projects! 🚀
